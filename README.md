@@ -2,6 +2,8 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/2446x5ohw7wv0yy1?svg=true)](https://ci.appveyor.com/project/sergipa/the-creator-3d)
 
+This is a fork of "The Creator 3D", an university project to create a game engine.
+
 The Creator 3D is a 3D engine made for educational purposes. This is an early version of the engine, the engine is subject to change.
 
 ## Usage
