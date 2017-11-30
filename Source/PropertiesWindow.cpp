@@ -121,6 +121,15 @@ void PropertiesWindow::DrawWindow()
 						CONSOLE_WARNING("GameObject can't have more than 1 Camera!");
 					}
 				}
+				if (ImGui::MenuItem("Physics")) {
+					if (selected_gameobject->GetComponent(Component::Physics) == nullptr) {
+						selected_gameobject->AddComponent(Component::Physics);
+					}
+					else
+					{
+						CONSOLE_WARNING("GameObject can't add physics to a static object!");
+					}
+				}
 				ImGui::EndPopup();
 			}
 		}
@@ -155,6 +164,10 @@ void PropertiesWindow::DrawComponent(Component * component)
 	case Component::Script:
 		break;
 	case Component::ParticleSystem:
+		break;
+	case Component::Physics:
+		if(!((ComponentTransform*)component)->GetGameObject()->IsStatic())
+			DrawPhysicsPanel((ComponentTransform*)component);
 		break;
 	default:
 		break;
@@ -337,5 +350,14 @@ void PropertiesWindow::DrawCameraPanel(ComponentCamera * camera)
 		}
 		
 		ImGui::Spacing();
+	}
+}
+
+void PropertiesWindow::DrawPhysicsPanel(ComponentTransform * transform)
+{
+	if (ImGui::CollapsingHeader("Physics", ImGuiTreeNodeFlags_DefaultOpen)) {
+		//If static it should not be able to modify values in this spot
+		//Made it so if it's static it should not render
+
 	}
 }
