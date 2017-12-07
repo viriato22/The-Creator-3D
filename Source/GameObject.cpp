@@ -62,7 +62,7 @@ Component * GameObject::AddComponent(Component::ComponentType component_type)
 		break;
 	case Component::BoxCollider:
 		break;
-	case Component::CircleCollider:
+	case Component::SphereCollider:
 		break;
 	case Component::AudioSource:
 		break;
@@ -87,6 +87,18 @@ Component * GameObject::GetComponent(Component::ComponentType component_type)
 		}
 	}
 	return nullptr;
+}
+
+std::list<Component*> GameObject::GetComponents(Component::ComponentType component_type)
+{
+	std::list<Component*> components;
+
+	for (std::list<Component*>::iterator it = components_list.begin(); it != components_list.end(); it++) 
+	{
+		if ((*it)->GetType() == component_type)  components.push_back(*it);
+	}
+
+	return components;
 }
 
 Component * GameObject::GetComponent(std::string component_type)

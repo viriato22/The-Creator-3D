@@ -14,6 +14,7 @@ public:
 
 	Component* AddComponent(Component::ComponentType component_type);
 	Component* GetComponent(Component::ComponentType component_type);
+	std::list<Component*> GetComponents(Component::ComponentType component_type);
 	Component* GetComponent(std::string component_type);
 	void DestroyComponent(Component::ComponentType component);
 
