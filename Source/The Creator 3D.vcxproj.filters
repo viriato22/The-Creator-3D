@@ -476,6 +476,7 @@
       <Filter>Sources\3d Party\Lua</Filter>
     </ClInclude>
     <ClInclude Include="ComponentPhysics.h">
+    <ClInclude Include="ComponentCollider.h">
       <Filter>Sources\GameObject\Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -782,6 +783,7 @@
     </ClCompile>
     <ClCompile Include="LuaScript.cpp" />
     <ClCompile Include="ComponentPhysics.cpp">
+    <ClCompile Include="ComponentCollider.cpp">
       <Filter>Sources\GameObject\Components</Filter>
     </ClCompile>
   </ItemGroup>

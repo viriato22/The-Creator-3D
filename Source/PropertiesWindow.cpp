@@ -156,7 +156,7 @@ void PropertiesWindow::DrawComponent(Component * component)
 		break;
 	case Component::BoxCollider:
 		break;
-	case Component::CircleCollider:
+	case Component::SphereCollider:
 		break;
 	case Component::AudioSource:
 		break;
