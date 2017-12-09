@@ -475,6 +475,9 @@
     <ClInclude Include="lua\include\lualib.h">
       <Filter>Sources\3d Party\Lua</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentPhysics.h">
+      <Filter>Sources\GameObject\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ModuleAudio.cpp">
@@ -778,6 +781,9 @@
       <Filter>Sources\Resources</Filter>
     </ClCompile>
     <ClCompile Include="LuaScript.cpp" />
+    <ClCompile Include="ComponentPhysics.cpp">
+      <Filter>Sources\GameObject\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="MathGeoLib\Geometry\KDTree.inl">

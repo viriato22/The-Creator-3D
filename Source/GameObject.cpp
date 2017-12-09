@@ -4,6 +4,7 @@
 #include "ModuleScene.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "ComponentPhysics.h"
 #include "Mesh.h"
 #include "ModuleResources.h"
 
@@ -71,6 +72,9 @@ Component * GameObject::AddComponent(Component::ComponentType component_type)
 	case Component::Script:
 		break;
 	case Component::ParticleSystem:
+		break;
+	case Component::Physics:
+		components_list.push_back(component = new ComponentPhysics(this));
 		break;
 	default:
 		break;

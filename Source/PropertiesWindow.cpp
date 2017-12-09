@@ -5,6 +5,7 @@
 #include "ComponentCamera.h"
 #include "ComponentMeshRenderer.h"
 #include "ComponentTransform.h"
+#include "ComponentPhysics.h"
 #include "TagsAndLayers.h"
 #include "ModuleEditor.h"
 #include "TagsAndLayersWindow.h"
@@ -127,7 +128,7 @@ void PropertiesWindow::DrawWindow()
 					}
 					else
 					{
-						CONSOLE_WARNING("GameObject can't add physics to a static object!");
+						CONSOLE_WARNING("GameObject can't have more than 1 Physics component!");
 					}
 				}
 				ImGui::EndPopup();
@@ -166,7 +167,7 @@ void PropertiesWindow::DrawComponent(Component * component)
 	case Component::ParticleSystem:
 		break;
 	case Component::Physics:
-		if(!((ComponentTransform*)component)->GetGameObject()->IsStatic())
+		if(((ComponentTransform*)component)->GetGameObject()->IsStatic() == false)
 			DrawPhysicsPanel((ComponentTransform*)component);
 		break;
 	default:
@@ -358,6 +359,6 @@ void PropertiesWindow::DrawPhysicsPanel(ComponentTransform * transform)
 	if (ImGui::CollapsingHeader("Physics", ImGuiTreeNodeFlags_DefaultOpen)) {
 		//If static it should not be able to modify values in this spot
 		//Made it so if it's static it should not render
-
+		ImGui::Button("Select Gameobject");
 	}
 }
