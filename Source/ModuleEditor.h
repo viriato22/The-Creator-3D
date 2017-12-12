@@ -24,6 +24,7 @@ class ImportWindow;
 class ResourcesWindow;
 class GameWindow;
 class ResourcesConfigWindow;
+class PhysicsWindow;
 
 class ModuleEditor :
 	public Module
@@ -67,5 +68,6 @@ public:
 	ResourcesWindow* resources_window = nullptr;
 	GameWindow* game_window = nullptr;
 	ResourcesConfigWindow* resources_config_window = nullptr;
+	PhysicsWindow* physics_window = nullptr;
 };
 

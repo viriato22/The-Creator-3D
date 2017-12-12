@@ -205,6 +205,7 @@
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="PerformanceWindow.h" />
     <ClInclude Include="PerfTimer.h" />
+    <ClInclude Include="PhysicsWindow.h" />
     <ClInclude Include="Prefab.h" />
     <ClInclude Include="RendererConfigWindow.h" />
     <ClInclude Include="RenderTextureMSAA.h" />
@@ -310,6 +311,7 @@
     <ClCompile Include="Octree.cpp" />
     <ClCompile Include="PerformanceWindow.cpp" />
     <ClCompile Include="PerfTimer.cpp" />
+    <ClCompile Include="PhysicsWindow.cpp" />
     <ClCompile Include="Prefab.cpp" />
     <ClCompile Include="RendererConfigWindow.cpp" />
     <ClCompile Include="RenderTextureMSAA.cpp" />

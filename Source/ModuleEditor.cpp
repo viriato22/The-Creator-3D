@@ -25,6 +25,7 @@
 #include "ResourcesWindow.h"
 #include "GameWindow.h"
 #include "ResourcesConfigWindow.h"
+#include "PhysicsWindow.h"
 
 ModuleEditor::ModuleEditor(Application* app, bool start_enabled, bool is_game) : Module(app, start_enabled, false)
 {
@@ -67,7 +68,8 @@ bool ModuleEditor::Init(Data* editor_config)
 	editor_windows.push_back(resources_window = new ResourcesWindow());
 	editor_windows.push_back(game_window = new GameWindow());
 	editor_windows.push_back(resources_config_window = new ResourcesConfigWindow());
-	
+	editor_windows.push_back(physics_window = new PhysicsWindow());
+
 	//editor_panels.push_back(animator_panel = new PanelAnimator());
 	//editor_panels.push_back(particle_editor_panel = new PanelParticleEditor());
 	ImGui::LoadDocks();
