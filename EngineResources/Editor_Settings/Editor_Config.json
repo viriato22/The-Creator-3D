@@ -1,8 +1,8 @@
 {
     "Engine_Settings": {
         "Window_Config": {
-            "screen_width": "1536",
-            "screen_height": "853",
+            "screen_width": "1366",
+            "screen_height": "705",
             "Fullscreen": "0",
             "Window_Resizable": "1",
             "Window_Borderless": "0",
