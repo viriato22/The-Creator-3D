@@ -105,6 +105,22 @@ std::list<Component*> GameObject::GetComponents(Component::ComponentType compone
 	return components;
 }
 
+
+std::list<Component*> GameObject::GetColliders()
+{
+	std::list<Component*> components;
+
+	for (std::list<Component*>::iterator it = components_list.begin(); it != components_list.end(); it++)
+	{
+		if ((*it)->GetType() == Component::ComponentType::BoxCollider ||
+			(*it)->GetType() == Component::ComponentType::SphereCollider ||
+			(*it)->GetType() == Component::ComponentType::MeshCollider)  components.push_back(*it);
+	}
+
+	return components;
+}
+
+
 Component * GameObject::GetComponent(std::string component_type)
 {
 	for (std::list<Component*>::iterator it = components_list.begin(); it != components_list.end(); it++) {

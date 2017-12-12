@@ -72,13 +72,7 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="GameWindow.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Application.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="AppWindowConfigWindow.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="MathGeoLib\Geometry\AABB.cpp">
@@ -303,6 +297,15 @@
     <ClCompile Include="MathGeoLib\Math\SSEMath.cpp">
       <Filter>Math</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentRigidBody.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWindow.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="AppWindowConfigWindow.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Data.h" />
@@ -382,13 +385,7 @@
     <ClInclude Include="GameObject.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="GameWindow.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Application.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="AppWindowConfigWindow.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="MathGeoLib\Geometry\AABB.h">
@@ -720,6 +717,15 @@
     </ClInclude>
     <ClInclude Include="MathGeoLib\Math\quat_simd.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentRigidBody.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWindow.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="AppWindowConfigWindow.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

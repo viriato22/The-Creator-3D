@@ -90,6 +90,7 @@
     <ClInclude Include="ComponentCamera.h" />
     <ClInclude Include="ComponentPhysics.h" />
     <ClInclude Include="ComponentCollider.h" />
+    <ClInclude Include="ComponentRigidBody.h" />
     <ClInclude Include="CubeMap.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="imgui\CustomImGui.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="ComponentCamera.cpp" />
     <ClCompile Include="ComponentPhysics.cpp" />
     <ClCompile Include="ComponentCollider.cpp" />
+    <ClCompile Include="ComponentRigidBody.cpp" />
     <ClCompile Include="CubeMap.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="imgui\CustomImGui.cpp" />

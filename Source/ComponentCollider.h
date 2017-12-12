@@ -2,6 +2,7 @@
 #include "Component.h"
 
 class btCollisionShape;
+class btCollisionObject;
 class btVector3;
 
 class ComponentCollider : public Component
@@ -17,6 +18,7 @@ public:
 
 protected:
 	btCollisionShape* shape = nullptr;
+	btCollisionObject* collision_obj = nullptr;
 	btVector3* center = nullptr;
 };
 
