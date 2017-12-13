@@ -12,8 +12,8 @@ public:
 
 	void OnDataChange() {};
 
-	void Save(Data& data) const {};
-	void Load(Data& data) {};
+	void Save(Data& data) const ;
+	void Load(Data& data);
 
 protected:
 	btRigidBody* rb;

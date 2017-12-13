@@ -6,6 +6,7 @@ namespace fs = std::experimental::filesystem;
 
 ModuleFileSystem::ModuleFileSystem(Application* app, bool start_enabled, bool is_game) : Module(app, start_enabled, is_game)
 {
+	name = "FS";
 }
 
 ModuleFileSystem::~ModuleFileSystem()

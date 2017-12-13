@@ -33,7 +33,7 @@ Application::Application()
 	scene = new ModuleScene(this);
 	renderer3D = new ModuleRenderer3D(this);
 	camera = new ModuleCamera3D(this);
-	//physics = new ModulePhysics3D(this);
+	physics = new ModulePhysics3D(this);
 	editor = new ModuleEditor(this);
 	resources = new ModuleResources(this);
 	time = new ModuleTime(this);
@@ -63,7 +63,7 @@ Application::Application()
 	//TIME
 	AddModule(time);
 	//Game Modules
-	//AddModule(physics);
+	AddModule(physics);
 
 	random = new math::LCG();
 	cursor = nullptr;

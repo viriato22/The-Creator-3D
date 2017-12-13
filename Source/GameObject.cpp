@@ -4,6 +4,8 @@
 #include "ModuleScene.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "ComponentRigidBody.h"
+#include "ComponentCollider.h"
 #include "ComponentPhysics.h"
 #include "Mesh.h"
 #include "ModuleResources.h"
@@ -57,13 +59,19 @@ Component * GameObject::AddComponent(Component::ComponentType component_type)
 		components_list.push_back(component = new ComponentCamera(this));
 		break;
 	case Component::RigidBody:
+		components_list.push_back(component = new ComponentRigidBody(this));
 		break;
 	case Component::MeshRenderer:
 		components_list.push_back(component = new ComponentMeshRenderer(this));
 		break;
 	case Component::BoxCollider:
+		components_list.push_back(component = new ComponentBoxCollider(this));
 		break;
 	case Component::SphereCollider:
+		components_list.push_back(component = new ComponentSphereCollider(this));
+		break;
+	case Component::MeshCollider:
+		components_list.push_back(component = new ComponentMeshCollider(this));
 		break;
 	case Component::AudioSource:
 		break;

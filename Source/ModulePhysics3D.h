@@ -34,6 +34,8 @@ public:
 	void AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);
 	void AddConstraintSlider(PhysBody3D& bodyA, PhysBody3D& bodyB, btTransform& body1, btTransform& body2, bool disable_collision);
 
+	btDiscreteDynamicsWorld* GetWorld() { return world; };
+
 private:
 
 	btDefaultCollisionConfiguration*	collision_conf;

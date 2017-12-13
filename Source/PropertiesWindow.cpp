@@ -122,13 +122,13 @@ void PropertiesWindow::DrawWindow()
 						CONSOLE_WARNING("GameObject can't have more than 1 Camera!");
 					}
 				}
-				if (ImGui::MenuItem("Physics")) {
-					if (selected_gameobject->GetComponent(Component::Physics) == nullptr) {
-						selected_gameobject->AddComponent(Component::Physics);
+				if (ImGui::MenuItem("RigidBody")) {
+					if (selected_gameobject->GetComponent(Component::RigidBody) == nullptr) {
+						selected_gameobject->AddComponent(Component::RigidBody);
 					}
 					else
 					{
-						CONSOLE_WARNING("GameObject can't have more than 1 Physics component!");
+						CONSOLE_WARNING("GameObject can't have more than 1 RigidBody component!");
 					}
 				}
 				ImGui::EndPopup();

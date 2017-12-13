@@ -13,12 +13,14 @@ public:
 
 	void OnDataChange() {};
 
-	void Save(Data& data) const {};
-	void Load(Data& data) {};
+	void Save(Data& data) const;
+	void Load(Data& data);
+
+	btCollisionShape* GetShape() { return shape; }
+	btVector3* GetCenter() { return center; }
 
 protected:
 	btCollisionShape* shape = nullptr;
-	btCollisionObject* collision_obj = nullptr;
 	btVector3* center = nullptr;
 };
 

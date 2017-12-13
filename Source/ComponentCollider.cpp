@@ -88,20 +88,26 @@ ComponentMeshCollider::ComponentMeshCollider(GameObject* attached_gameobject) : 
 		for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
 		{
 			Mesh* mesh = ((ComponentMeshRenderer*)(*it))->GetMesh();
-			for (int i = 0; i < mesh->num_indices * 3; i += 3)
+			for (int i = 0; (i + 2) < mesh->num_indices; i += 3)
 			{
 				float vert_x = mesh->vertices[mesh->indices[i]];
 				float vert_y = mesh->vertices[mesh->indices[i + 1]];
 				float vert_z = mesh->vertices[mesh->indices[i + 2]];
-				hull->addPoint(btVector3(vert_x, vert_y, vert_z), false);
-				btTransform transform;
-				transform.setIdentity();
+
+				const btVector3 new_point = { vert_x, vert_y, vert_z };
+
+				hull->addPoint(btVector3(vert_x, vert_y, vert_z));
+
+				// FIX BELOW, EXCEPTION THROWN
+				//if(i < 50) hull->addPoint(btVector3(vert_x, vert_y, vert_z));
+				//else if (!hull->isInside(new_point, btScalar(0.0f)))	hull->addPoint(btVector3(vert_x, vert_y, vert_z));
 			}
 		}
+
 		shape = hull;
-		btVector3 aux; btScalar aux2;
-		hull->getBoundingSphere(aux, aux2);
-		center = new btVector3(aux);
+		btVector3 centroid; btScalar aux;
+		hull->getBoundingSphere(centroid, aux);
+		center = new btVector3(centroid);
 	}
 	else
 	{
@@ -111,3 +117,23 @@ ComponentMeshCollider::ComponentMeshCollider(GameObject* attached_gameobject) : 
 	}
 
 }
+
+
+void ComponentCollider::Save(Data & data) const
+{
+	data.AddInt("Type", GetType());
+	data.AddBool("Active", IsActive());
+	data.AddUInt("UUID", GetUID());
+
+	// NEEDS IMPLEMENTATION!
+}
+
+void ComponentCollider::Load(Data & data)
+{
+	SetType((Component::ComponentType)data.GetInt("Type"));
+	SetActive(data.GetBool("Active"));
+	SetUID(data.GetUInt("UUID"));
+
+	// NEEDS IMPLEMENTATION!
+}
+

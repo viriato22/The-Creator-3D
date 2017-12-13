@@ -6,6 +6,7 @@
 
 ModulePrefabImporter::ModulePrefabImporter(Application* app, bool start_enabled, bool is_game) : Module(app, start_enabled, is_game)
 {
+	name = "prefab_importer";
 }
 
 ModulePrefabImporter::~ModulePrefabImporter()

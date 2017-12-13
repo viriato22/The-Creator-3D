@@ -22,6 +22,7 @@
 
 ModuleMeshImporter::ModuleMeshImporter(Application* app, bool start_enabled, bool is_game) : Module(app, start_enabled, is_game)
 {
+	name = "mesh_imported";
 }
 
 ModuleMeshImporter::~ModuleMeshImporter()
