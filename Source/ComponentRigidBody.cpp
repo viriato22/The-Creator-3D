@@ -120,6 +120,21 @@ void ComponentRigidBody::UpdateGameObjTransform()
 	obj_transform->UpdateGlobalMatrix();
 }
 
+void ComponentRigidBody::UpdateRBTransformFromGameObject()
+{
+	ComponentTransform* obj_transform = (ComponentTransform*)GetGameObject()->GetComponent(ComponentType::Transform);
+	btTransform t;
+	rb->getMotionState()->getWorldTransform(t);
+
+
+	float3 position = obj_transform->GetGlobalPosition();
+	t.setOrigin({ position.x, position.y, position.z });
+
+	float3 rotation = obj_transform->GetGlobalRotation();
+	btQuaternion quat; quat.setEuler(rotation.y, rotation.x, rotation.z);
+	t.setRotation(quat);
+}
+
 
 void ComponentRigidBody::SetPos(float x, float y, float z)
 {

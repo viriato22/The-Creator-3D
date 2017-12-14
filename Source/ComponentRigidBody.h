@@ -23,6 +23,7 @@ public:
 	void SetAsSensor(bool is_sensor);
 	
 	void UpdateGameObjTransform();
+	void UpdateRBTransformFromGameObject();
 
 protected:
 	btRigidBody* rb;
