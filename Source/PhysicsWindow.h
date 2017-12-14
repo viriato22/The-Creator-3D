@@ -4,6 +4,8 @@
 
 class Component;
 class ComponentRigidBody;
+class ComponentBoxCollider;
+class ComponentSphereCollider;
 
 class PhysicsWindow :
 	public Window
@@ -17,8 +19,8 @@ public:
 	void DrawComponent(Component * component);
 
 	void DrawRigidbodyPanel(ComponentRigidBody* rigidbody);
-	void DrawBoxColliderPanel();
-	void DrawSphereColliderPanel();
+	void DrawBoxColliderPanel(ComponentBoxCollider* boxcollider);
+	void DrawSphereColliderPanel(ComponentSphereCollider* spherecollider);
 	void DrawCapsuleColliderPanel();
 	void DrawWheelColliderPanel();
 

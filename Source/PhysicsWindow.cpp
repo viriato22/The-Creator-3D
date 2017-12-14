@@ -8,6 +8,7 @@
 #include "imgui/CustomImGui.h"
 #include "ModuleRenderer3D.h"
 #include "ComponentRigidBody.h"
+#include "ComponentCollider.h"
 
 PhysicsWindow::PhysicsWindow()
 {
@@ -37,12 +38,26 @@ void PhysicsWindow::DrawWindow()
 				if (ImGui::BeginPopup("Colliders"))
 				{
 					if (ImGui::MenuItem("Rigidbody")) {
-						if (object1->GetComponent(Component::RigidBody) == nullptr) { //Will leave this one to work as example
+						if (object1->GetComponent(Component::RigidBody) == nullptr) {
 							object1->AddComponent(Component::RigidBody);
 						}
 						else
 						{
 							CONSOLE_WARNING("GameObject can't have more than 1 Rigidbody!");
+						}
+						if (object1->GetComponent(Component::BoxCollider) == nullptr) {
+							object1->AddComponent(Component::BoxCollider);
+						}
+						else
+						{
+							CONSOLE_WARNING("GameObject can't have more than 1 Box Collider!");
+						}
+						if (object1->GetComponent(Component::SphereCollider) == nullptr) {
+							object1->AddComponent(Component::SphereCollider);
+						}
+						else
+						{
+							CONSOLE_WARNING("GameObject can't have more than 1 Sphere Collider!");
 						}
 					}
 					ImGui::EndPopup();
@@ -123,7 +138,7 @@ void PhysicsWindow::DrawRigidbodyPanel(ComponentRigidBody* rigidbody) {
 	}
 }
 
-void PhysicsWindow::DrawBoxColliderPanel()
+void PhysicsWindow::DrawBoxColliderPanel(ComponentBoxCollider* boxcollider)
 {
 	bool trigger;
 	float3 center, size;
@@ -138,7 +153,7 @@ void PhysicsWindow::DrawBoxColliderPanel()
 	}
 }
 
-void PhysicsWindow::DrawSphereColliderPanel()
+void PhysicsWindow::DrawSphereColliderPanel(ComponentSphereCollider* spherecollider)
 {
 	bool trigger;
 	float3 center;
