@@ -167,8 +167,8 @@ void PropertiesWindow::DrawComponent(Component * component)
 	case Component::ParticleSystem:
 		break;
 	case Component::Physics:
-		if(((ComponentTransform*)component)->GetGameObject()->IsStatic() == false)
-			DrawPhysicsPanel((ComponentTransform*)component);
+		/*if(((ComponentTransform*)component)->GetGameObject()->IsStatic() == false)
+			DrawPhysicsPanel((ComponentTransform*)component);*/
 		break;
 	default:
 		break;
@@ -354,11 +354,11 @@ void PropertiesWindow::DrawCameraPanel(ComponentCamera * camera)
 	}
 }
 
-void PropertiesWindow::DrawPhysicsPanel(ComponentTransform * transform)
+/*void PropertiesWindow::DrawPhysicsPanel(ComponentTransform * transform)
 {
 	if (ImGui::CollapsingHeader("Physics", ImGuiTreeNodeFlags_DefaultOpen)) {
 		//If static it should not be able to modify values in this spot
 		//Made it so if it's static it should not render
 		ImGui::Button("Select Gameobject");
 	}
-}
+}*/
