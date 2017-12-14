@@ -25,22 +25,28 @@ void PhysicsWindow::DrawWindow()
 		GameObject* object1 = nullptr;
 		GameObject* object2 = nullptr;
 		if (App->scene->selected_gameobjects.size() == 1) {
-			if (ImGui::Button("Select GameObject")) {
-				if (object1 == nullptr) {
-					object1 = App->scene->selected_gameobjects.front();
+			object1 = App->scene->selected_gameobjects.front();
+			if (object1 != nullptr && !object1->is_on_destroy) {
+				if (ImGui::Button("Add Collider")) {
+					ImGui::OpenPopup("Colliders");
 				}
-				else if (object2 == nullptr && App->scene->selected_gameobjects.front() != object1) {
-					object2 = App->scene->selected_gameobjects.front();
+				if (ImGui::BeginPopup("Colliders"))
+				{
+					if (ImGui::MenuItem("Rigidbody")) {
+						if (object1->GetComponent(Component::RigidBody) == nullptr) { //Will leave this one to work as example
+							object1->AddComponent(Component::RigidBody);
+						}
+						else
+						{
+							CONSOLE_WARNING("GameObject can't have more than 1 Rigidbody!");
+						}
+					}
+					ImGui::EndPopup();
 				}
-				else {
-					//error message
-				}
-			}
 
-			for (std::list<Component*>::iterator it = object1->components_list.begin(); it != object1->components_list.end(); it++) {
-				DrawComponent((*it));
-				ImGui::Separator();
-				ImGui::Spacing();
+				for (std::list<Component*>::iterator it = object1->components_list.begin(); it != object1->components_list.end(); it++) {
+					DrawComponent((*it));
+				}
 			}
 		}
 		else if (App->scene->selected_gameobjects.size() == 2) {
@@ -81,7 +87,36 @@ void PhysicsWindow::DrawComponent(Component * component)
 }
 
 void PhysicsWindow::DrawRigidbodyPanel(ComponentRigidBody* rigidbody) {
-	if (ImGui::Button("Make Rigidbody")) {
+	bool FreezePosX, FreezeRotX, FreezePosY, FreezeRotY, FreezePosZ, FreezeRotZ; //these should be changed to a call to their component
+	bool gravity, kinematic;
+	float mass, drag, angulardrag;
 
+	if (ImGui::CollapsingHeader("Rigidbody")) {
+		ImGui::Text("Mass"); ImGui::SameLine();
+		ImGui::InputFloat("", &mass);
+
+		ImGui::Text("Drag"); ImGui::SameLine();
+		ImGui::InputFloat("", &drag);
+
+		ImGui::Text("Angular Drag"); ImGui::SameLine();
+		ImGui::InputFloat("", &angulardrag);
+
+		ImGui::Text("Gravity"); ImGui::SameLine();
+		ImGui::Checkbox("", &gravity);
+
+		ImGui::Text("Is kinematic"); ImGui::SameLine();
+		ImGui::Checkbox("", &kinematic);
+
+		if (ImGui::CollapsingHeader("Constraints")) {
+			ImGui::Text("Freeze position"); ImGui::SameLine();
+			ImGui::Checkbox("X", &FreezePosX); ImGui::SameLine();
+			ImGui::Checkbox("Y", &FreezePosY); ImGui::SameLine();
+			ImGui::Checkbox("Z", &FreezePosZ);
+
+			ImGui::Text("Freeze rotation"); ImGui::SameLine();
+			ImGui::Checkbox("X", &FreezeRotX); ImGui::SameLine();
+			ImGui::Checkbox("Y", &FreezeRotY); ImGui::SameLine();
+			ImGui::Checkbox("Z", &FreezeRotZ);
+		}
 	}
 }
