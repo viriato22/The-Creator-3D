@@ -2,8 +2,12 @@
 #include "Application.h"
 #include "ModulePhysics3D.h"
 #include "PhysBody3D.h"
+#include "GameObject.h"
+#include "ComponentTransform.h"
 #include "Primitive.h"
 #include "ModuleEditor.h"
+#include "ComponentCollider.h"
+#include "ComponentRigidBody.h"
 #include "PerformanceWindow.h"
 #include "ModuleInput.h"
 
@@ -78,6 +82,16 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 {
 	ms_timer.Start();
 	world->stepSimulation(dt, 15);
+
+	for (std::list<btRigidBody*>::iterator it = rigid_bodies.begin(); it != rigid_bodies.end(); it++)
+	{
+		if (!(*it)->isStaticOrKinematicObject())
+		{
+			ComponentRigidBody* rb = (ComponentRigidBody*)(*it)->getUserPointer();
+			rb->UpdateGameObjTransform();
+		}
+		
+	}
 
 	int numManifolds = world->getDispatcher()->getNumManifolds();
 	for(int i = 0; i<numManifolds; i++)

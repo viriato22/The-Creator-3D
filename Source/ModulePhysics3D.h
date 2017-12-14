@@ -35,6 +35,7 @@ public:
 	void AddConstraintSlider(PhysBody3D& bodyA, PhysBody3D& bodyB, btTransform& body1, btTransform& body2, bool disable_collision);
 
 	btDiscreteDynamicsWorld* GetWorld() { return world; };
+	std::list<btRigidBody*>* GetRigidBodies() { return &rigid_bodies; };
 
 private:
 
@@ -50,6 +51,8 @@ private:
 	std::list<PhysBody3D*> bodies;
 	std::list<btDefaultMotionState*> motions;
 	std::list<btTypedConstraint*> constraints;
+
+	std::list<btRigidBody*> rigid_bodies;
 
 public:
 	bool debug;

@@ -31,7 +31,13 @@ ComponentRigidBody::ComponentRigidBody(GameObject* attached_gameobject)
 
 	ComponentTransform* obj_transform = (ComponentTransform*)attached_gameobject->GetComponent(ComponentType::Transform);
 	btTransform startTransform;
-	startTransform.setFromOpenGLMatrix(&obj_transform->GetMatrix().v[0][0]);
+
+	float3 position = obj_transform->GetGlobalPosition();
+	startTransform.setOrigin({ position.x, position.y, position.z });
+
+	float3 rotation = obj_transform->GetGlobalRotation();
+	btQuaternion quat; quat.setEuler(rotation.y, rotation.x, rotation.z);
+	startTransform.setRotation(quat);
 
 	btVector3 localInertia(0, 0, 0);
 	attached_collider->GetShape()->calculateLocalInertia(INITIAL_RB_MASS, localInertia);
@@ -43,6 +49,7 @@ ComponentRigidBody::ComponentRigidBody(GameObject* attached_gameobject)
 	rb->setUserPointer(this);
 
 	App->physics->GetWorld()->addRigidBody(rb);
+	App->physics->GetRigidBodies()->push_back(rb);
 
 	//delete myMotionState;
 }
@@ -70,5 +77,81 @@ void ComponentRigidBody::Load(Data & data)
 
 	// NEEDS IMPLEMENTATION!
 }
+
+void ComponentRigidBody::Push(float x, float y, float z)
+{
+	rb->applyCentralImpulse(btVector3(x, y, z));
+}
+
+
+void ComponentRigidBody::GetTransform(float* matrix) const
+{
+	if (rb != NULL && matrix != NULL)
+	{
+		btTransform t;
+		rb->getMotionState()->getWorldTransform(t);
+		t.getOpenGLMatrix(matrix);
+	}
+}
+
+
+void ComponentRigidBody::SetTransform(const float* matrix) const
+{
+	if (rb != NULL && matrix != NULL)
+	{
+		btTransform t;
+		t.setFromOpenGLMatrix(matrix);
+		rb->getMotionState()->setWorldTransform(t);
+	}
+}
+
+void ComponentRigidBody::UpdateGameObjTransform()
+{
+	btTransform t;
+	rb->getMotionState()->getWorldTransform(t);
+	ComponentTransform* obj_transform = (ComponentTransform*)GetGameObject()->GetComponent(Component::ComponentType::Transform);
+
+	btVector3 pos = t.getOrigin();
+	obj_transform->SetPosition({pos.x(), pos.y(), pos.z()});
+
+	btQuaternion quat = t.getRotation();
+	obj_transform->SetRotation({ quat.getX(), quat.getY(), quat.getZ() });
+
+	obj_transform->UpdateGlobalMatrix();
+}
+
+
+void ComponentRigidBody::SetPos(float x, float y, float z)
+{
+	btTransform t;
+	rb->getMotionState()->getWorldTransform(t);
+	t.setOrigin(btVector3(x, y, z));
+	rb->setWorldTransform(t);
+}
+
+void ComponentRigidBody::GetPos(float* x, float* y, float* z)
+{
+	btTransform t;
+	rb->getMotionState()->getWorldTransform(t);
+	btVector3 pos = t.getOrigin();
+	btVector3FloatData posFloat;
+	pos.serializeFloat(posFloat);
+	*x = posFloat.m_floats[0];
+	*y = posFloat.m_floats[1];
+	*z = posFloat.m_floats[2];
+}
+
+void ComponentRigidBody::SetAsSensor(bool is_sensor)
+{
+	if (is_sensor != is_sensor)
+	{
+		is_sensor = is_sensor;
+		if (is_sensor == true)
+			rb->setCollisionFlags(rb->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		else
+			rb->setCollisionFlags(rb->getCollisionFlags() &~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	}
+}
+
 
 
