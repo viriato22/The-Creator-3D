@@ -124,8 +124,6 @@ void ComponentRigidBody::UpdateRBTransformFromGameObject()
 {
 	ComponentTransform* obj_transform = (ComponentTransform*)GetGameObject()->GetComponent(ComponentType::Transform);
 	btTransform t;
-	rb->getMotionState()->getWorldTransform(t);
-
 
 	float3 position = obj_transform->GetGlobalPosition();
 	t.setOrigin({ position.x, position.y, position.z });
@@ -133,6 +131,9 @@ void ComponentRigidBody::UpdateRBTransformFromGameObject()
 	float3 rotation = obj_transform->GetGlobalRotation();
 	btQuaternion quat; quat.setEuler(rotation.y, rotation.x, rotation.z);
 	t.setRotation(quat);
+
+	rb->getMotionState()->setWorldTransform(t);
+	Push(0,1,0);
 }
 
 

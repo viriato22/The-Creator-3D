@@ -99,17 +99,14 @@ void ComponentTransform::UpdateGlobalMatrix()
 
 		transform_matrix = transform_matrix.FromTRS(position, rotation, scale);
 		transform_matrix = parent_transform->transform_matrix * transform_matrix;
-
-		if (ComponentRigidBody* rb = (ComponentRigidBody*)GetGameObject()->GetComponent(ComponentType::RigidBody))
-			rb->UpdateRBTransformFromGameObject();
 	}
 	else
 	{
 		transform_matrix = float4x4::FromTRS(position, rotation, scale);
 		for (std::list<GameObject*>::iterator it = this->GetGameObject()->childs.begin(); it != this->GetGameObject()->childs.end(); it++)
 		{
-			ComponentTransform* child_transform =, (ComponentTransform*)(*it)->GetComponent(Component::Transform);
-			child_transform->UpdateGlobalMatrix()
+			ComponentTransform* child_transform = (ComponentTransform*)(*it)->GetComponent(Component::Transform);
+			child_transform->UpdateGlobalMatrix();
 		}
 	}
 

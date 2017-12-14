@@ -6,6 +6,7 @@
 #include "ComponentMeshRenderer.h"
 #include "ComponentTransform.h"
 #include "ComponentPhysics.h"
+#include "ComponentRigidBody.h"
 #include "TagsAndLayers.h"
 #include "ModuleEditor.h"
 #include "TagsAndLayersWindow.h"
@@ -194,12 +195,21 @@ void PropertiesWindow::DrawTransformPanel(ComponentTransform * transform)
 		bool is_static = !transform->GetGameObject()->IsStatic();
 		if (ImGui::DragFloat3("Position", (float*)&position, is_static, 0.25f)) {
 			transform->SetPosition(position);
+
+			if (ComponentRigidBody* rb = (ComponentRigidBody*)transform->GetGameObject()->GetComponent(Component::ComponentType::RigidBody))
+				rb->UpdateRBTransformFromGameObject();
 		}
 		if (ImGui::DragFloat3("Rotation", (float*)&rotation, is_static, 0.25f, -360, 360)) {
 			transform->SetRotation(rotation);
+
+			if (ComponentRigidBody* rb = (ComponentRigidBody*)transform->GetGameObject()->GetComponent(Component::ComponentType::RigidBody))
+				rb->UpdateRBTransformFromGameObject();
 		}
 		if (ImGui::DragFloat3("Scale", (float*)&scale, is_static, 0.25f)) {
 			transform->SetScale(scale);
+
+			if (ComponentRigidBody* rb = (ComponentRigidBody*)transform->GetGameObject()->GetComponent(Component::ComponentType::RigidBody))
+				rb->UpdateRBTransformFromGameObject();
 		}
 	}
 }

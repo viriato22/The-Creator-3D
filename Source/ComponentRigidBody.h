@@ -25,6 +25,8 @@ public:
 	void UpdateGameObjTransform();
 	void UpdateRBTransformFromGameObject();
 
+	btRigidBody* getBtRigidBody() { return rb; }
+
 protected:
 	btRigidBody* rb;
 	ComponentCollider* attached_collider = nullptr;   // rigidbody without collider isn't supported, if so, a collider will be created
