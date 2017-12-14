@@ -20,6 +20,6 @@ public:
 	void DrawTransformPanel(ComponentTransform* transform);
 	void DrawMeshRendererPanel(ComponentMeshRenderer* spriteRenderer);
 	void DrawCameraPanel(ComponentCamera* camera);
-	void DrawPhysicsPanel(ComponentTransform * transform);
+	//void DrawPhysicsPanel(ComponentTransform * transform);
 };
 
