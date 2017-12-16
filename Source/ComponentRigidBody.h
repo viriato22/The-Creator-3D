@@ -47,6 +47,7 @@ protected:
 	btRigidBody* rb;
 	btMotionState* motion_state;
 	ComponentCollider* attached_collider = nullptr;   // rigidbody without collider isn't supported, if so, a collider will be created
+	float mass = 0.0f;
 
 	bool is_sensor = false;
 	bool use_gravity = false;

@@ -40,14 +40,14 @@ ComponentRigidBody::ComponentRigidBody(GameObject* attached_gameobject)
 	startTransform.setRotation(quat);
 
 	btVector3 localInertia(0, 0, 0);
-	attached_collider->GetShape()->calculateLocalInertia(INITIAL_RB_MASS, localInertia);
+	mass = INITIAL_RB_MASS;
+	attached_collider->GetShape()->calculateLocalInertia(mass, localInertia);
 
-	btDefaultMotionState* myMotionState = new btDefaultMotionState(startTransform);
-	btRigidBody::btRigidBodyConstructionInfo rbInfo(INITIAL_RB_MASS, myMotionState, attached_collider->GetShape(), localInertia);
+	motion_state = new btDefaultMotionState(startTransform);
+	btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, motion_state, attached_collider->GetShape(), localInertia);
 
 	rb = new btRigidBody(rbInfo);
 	rb->setUserPointer(this);
-	motion_state = myMotionState;
 
 	App->physics->GetWorld()->addRigidBody(rb);
 	App->physics->GetRigidBodies()->push_back(rb);
@@ -182,11 +182,10 @@ void ComponentRigidBody::SetAsKinematic(bool kinematic)
 	is_kinematic = kinematic;
 }
 
-void ComponentRigidBody::SetMass(float mass)
+void ComponentRigidBody::SetMass(float new_mass)
 {
-	btVector3 inertia;
-	rb->getCollisionShape()->calculateLocalInertia(mass, inertia);
-	rb->setMassProps(mass, inertia);
+	mass = new_mass;
+	rb->setMassProps(mass, rb->getLocalInertia()); 
 }
 
 void ComponentRigidBody::SetDrag(float drag, float adrag)
@@ -206,7 +205,7 @@ bool ComponentRigidBody::GetKinematic() const
 
 float ComponentRigidBody::GetMass() const
 {
-	return 0.0f;
+	return mass;
 }
 
 float ComponentRigidBody::GetDrag() const
