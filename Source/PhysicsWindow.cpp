@@ -178,12 +178,21 @@ void PhysicsWindow::DrawBoxColliderPanel(ComponentBoxCollider* boxcollider)
 	size = boxcollider->GetSize();
 
 	if (ImGui::CollapsingHeader("Box Collider")) {
-		ImGui::Checkbox("Is Trigger", &trigger);
+		if (ImGui::Checkbox("Is Trigger", &trigger))
+		{
+			boxcollider->SetTrigger(trigger);
+		}
 
 		ImGui::Spacing();
 
-		ImGui::DragFloat3("Center", (float*)&center, 0.25f);
-		ImGui::DragFloat3("Size", (float*)&size, 0.25f);
+		if (ImGui::DragFloat3("Center", (float*)&center, 0.25f))
+		{
+
+		}
+		if (ImGui::DragFloat3("Size", (float*)&size, 0.25f))
+		{
+			boxcollider->SetSize(size);
+		}
 	}
 }
 
