@@ -47,11 +47,11 @@ ComponentRigidBody::ComponentRigidBody(GameObject* attached_gameobject)
 
 	rb = new btRigidBody(rbInfo);
 	rb->setUserPointer(this);
+	motion_state = myMotionState;
 
 	App->physics->GetWorld()->addRigidBody(rb);
 	App->physics->GetRigidBodies()->push_back(rb);
 
-	//delete myMotionState;
 }
 
 ComponentRigidBody::~ComponentRigidBody()
@@ -132,8 +132,11 @@ void ComponentRigidBody::UpdateRBTransformFromGameObject()
 	btQuaternion quat; quat.setEuler(rotation.y, rotation.x, rotation.z);
 	t.setRotation(quat);
 
+	delete motion_state;
+	motion_state = new btDefaultMotionState(t);
+
+	rb->setMotionState(motion_state);
 	rb->getMotionState()->setWorldTransform(t);
-	Push(0,1,0);
 }
 
 
