@@ -172,5 +172,77 @@ void ComponentRigidBody::SetAsSensor(bool is_sensor)
 	}
 }
 
+void ComponentRigidBody::UseGravity(bool gravity)
+{
+	use_gravity = gravity;
+}
 
+void ComponentRigidBody::SetAsKinematic(bool kinematic)
+{
+	is_kinematic = kinematic;
+}
 
+void ComponentRigidBody::SetMass(float mass)
+{
+	btVector3 inertia;
+	rb->getCollisionShape()->calculateLocalInertia(mass, inertia);
+	rb->setMassProps(mass, inertia);
+}
+
+void ComponentRigidBody::SetDrag(float drag, float adrag)
+{
+	rb->setDamping(drag, adrag);
+}
+
+bool ComponentRigidBody::GetGravity() const
+{
+	return use_gravity;
+}
+
+bool ComponentRigidBody::GetKinematic() const
+{
+	return is_kinematic;
+}
+
+float ComponentRigidBody::GetMass() const
+{
+	return 0.0f;
+}
+
+float ComponentRigidBody::GetDrag() const
+{
+	return rb->getLinearDamping();
+}
+
+float ComponentRigidBody::GetADrag() const
+{
+	return rb->getAngularDamping();
+}
+
+void ComponentRigidBody::FreezePos(bool X, bool Y, bool Z)
+{
+	posX = X;
+	posY = Y;
+	posZ = Z;
+}
+
+void ComponentRigidBody::FreezeRot(bool X, bool Y, bool Z)
+{
+	rotX = X;
+	rotY = Y;
+	rotZ = Z;
+}
+
+void ComponentRigidBody::GetFreezePos(bool& X, bool& Y, bool& Z)
+{
+	X = posX;
+	Y = posY;
+	Z = posZ;
+}
+
+void ComponentRigidBody::GetFreezeRot(bool& X, bool& Y, bool& Z)
+{
+	X = rotX;
+	Y = rotY;
+	Z = rotZ;
+}

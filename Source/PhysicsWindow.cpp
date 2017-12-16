@@ -102,38 +102,68 @@ void PhysicsWindow::DrawComponent(Component * component)
 }
 
 void PhysicsWindow::DrawRigidbodyPanel(ComponentRigidBody* rigidbody) {
-	bool FreezePosX, FreezeRotX, FreezePosY, FreezeRotY, FreezePosZ, FreezeRotZ; //these should be changed to a call to their component
+	bool FreezePosX, FreezeRotX, FreezePosY, FreezeRotY, FreezePosZ, FreezeRotZ;
 	bool gravity, kinematic;
 	float mass, drag, angulardrag;
 
+	rigidbody->GetFreezePos(FreezePosX, FreezePosY, FreezePosZ);
+	rigidbody->GetFreezeRot(FreezeRotX, FreezeRotY, FreezeRotZ);
+	gravity = rigidbody->GetGravity();
+	kinematic = rigidbody->GetKinematic();
+	//don't know how to get the mass
+	drag = rigidbody->GetDrag();
+	angulardrag = rigidbody->GetADrag();
+
 	if (ImGui::CollapsingHeader("Rigidbody")) {
-		ImGui::Text("Mass"); ImGui::SameLine();
-		ImGui::InputFloat("", &mass);
+		if (ImGui::DragFloat("Mass", &mass, 0.25f))
+		{
+			rigidbody->SetMass(mass);
+		}
 
-		ImGui::Text("Drag"); ImGui::SameLine();
-		ImGui::InputFloat("", &drag);
+		if (ImGui::DragFloat("Drag", &drag, 0.25f)) {
+			rigidbody->SetDrag(drag, angulardrag);
+		}
 
-		ImGui::Text("Angular Drag"); ImGui::SameLine();
-		ImGui::InputFloat("", &angulardrag);
+		if (ImGui::DragFloat("Angular Drag", &angulardrag, 0.25f)) {
+			rigidbody->SetDrag(drag, angulardrag);
+		}
 
-		ImGui::Text("Gravity"); ImGui::SameLine();
-		ImGui::Checkbox("", &gravity);
+		if (ImGui::Checkbox("Use gravity", &gravity)) {
+			rigidbody->UseGravity(gravity);
+		}
 
-		ImGui::Text("Is kinematic"); ImGui::SameLine();
-		ImGui::Checkbox("", &kinematic);
+		if (ImGui::Checkbox("Is kinematic", &kinematic)) {
+			rigidbody->SetAsKinematic(kinematic);
+		}
 
 		if (ImGui::CollapsingHeader("Constraints")) {
 			ImGui::Text("Freeze position"); ImGui::SameLine();
-			ImGui::Checkbox("X", &FreezePosX); ImGui::SameLine();
-			ImGui::Checkbox("Y", &FreezePosY); ImGui::SameLine();
-			ImGui::Checkbox("Z", &FreezePosZ);
+			if (ImGui::Checkbox("X", &FreezePosX)) {
+				rigidbody->FreezePos(FreezePosX, FreezePosY, FreezePosZ);
+			}
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Y", &FreezePosY)) {
+				rigidbody->FreezePos(FreezePosX, FreezePosY, FreezePosZ);
+			}
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Z", &FreezePosZ)) {
+				rigidbody->FreezePos(FreezePosX, FreezePosY, FreezePosZ);
+			}
 
 			ImGui::Spacing();
 
 			ImGui::Text("Freeze rotation"); ImGui::SameLine();
-			ImGui::Checkbox("X", &FreezeRotX); ImGui::SameLine();
-			ImGui::Checkbox("Y", &FreezeRotY); ImGui::SameLine();
-			ImGui::Checkbox("Z", &FreezeRotZ);
+			if (ImGui::Checkbox("X", &FreezeRotX)) {
+				rigidbody->FreezeRot(FreezeRotX, FreezeRotY, FreezeRotZ);
+			}
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Y", &FreezeRotY)) {
+				rigidbody->FreezeRot(FreezeRotX, FreezeRotY, FreezeRotZ);
+			}
+			ImGui::SameLine();
+			if (ImGui::Checkbox("Z", &FreezeRotZ)) {
+				rigidbody->FreezeRot(FreezeRotX, FreezeRotY, FreezeRotZ);
+			}
 		}
 	}
 }
