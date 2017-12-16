@@ -173,6 +173,10 @@ void PhysicsWindow::DrawBoxColliderPanel(ComponentBoxCollider* boxcollider)
 	bool trigger;
 	float3 center, size;
 
+	trigger = boxcollider->GetTrigger();
+	//center = (float3)boxcollider->GetCenter();
+	size = boxcollider->GetSize();
+
 	if (ImGui::CollapsingHeader("Box Collider")) {
 		ImGui::Checkbox("Is Trigger", &trigger);
 
@@ -185,17 +189,26 @@ void PhysicsWindow::DrawBoxColliderPanel(ComponentBoxCollider* boxcollider)
 
 void PhysicsWindow::DrawSphereColliderPanel(ComponentSphereCollider* spherecollider)
 {
-	bool trigger;
+	bool trigger = spherecollider->GetTrigger();
 	float3 center;
-	float radius;
+	float radius = spherecollider->GetRadius();
 
 	if (ImGui::CollapsingHeader("Sphere Collider")) {
-		ImGui::Checkbox("Is Trigger", &trigger);
+		if (ImGui::Checkbox("Is Trigger", &trigger))
+		{
+			spherecollider->SetTrigger(trigger);
+		}
 
 		ImGui::Spacing();
 
-		ImGui::DragFloat3("Center", (float*)&center, 0.25f);
-		ImGui::DragFloat("Radius", &radius, 0.25f);
+		if (ImGui::DragFloat3("Center", (float*)&center, 0.25f))
+		{
+
+		}
+		if (ImGui::DragFloat("Radius", &radius, 0.25f))
+		{
+			spherecollider->SetRadius(radius);
+		}
 	}
 }
 

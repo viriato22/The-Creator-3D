@@ -39,8 +39,12 @@ ComponentBoxCollider::ComponentBoxCollider(GameObject* attached_gameobject) : Co
 
 		float3 AABB_size = enclosingAABB->Size();
 		shape = new btBoxShape(btVector3(AABB_size.x / 2, AABB_size.y / 2, AABB_size.z / 2));
+		size = (float3)(AABB_size.x / 2, AABB_size.y / 2, AABB_size.z / 2);
 	}
-	else shape = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
+	else {
+		shape = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
+		size = (float3)(0.5f, 0.5f, 0.5f);
+	}
 
 	float3 center_point = enclosingAABB->CenterPoint();
 	center = new btVector3( center_point.x, center_point.y, center_point.z );
@@ -66,8 +70,12 @@ ComponentSphereCollider::ComponentSphereCollider(GameObject* attached_gameobject
 
 		Sphere enclosing_sphere = enclosingAABB->MinimalEnclosingSphere();
 		shape = new btSphereShape(enclosing_sphere.r);
+		radius = enclosing_sphere.r;
 	}
-	else shape = new btSphereShape(0.5f);
+	else {
+		shape = new btSphereShape(0.5f);
+		radius = 0.5f;
+	}
 
 	float3 center_point = enclosingAABB->CenterPoint();
 	center = new btVector3( center_point.x, center_point.y, center_point.z );
@@ -137,3 +145,26 @@ void ComponentCollider::Load(Data & data)
 	// NEEDS IMPLEMENTATION!
 }
 
+void ComponentBoxCollider::SetSize(float3 new_size)
+{
+	delete shape;
+	size = new_size;
+	shape = new btBoxShape(btVector3(size.x, size.y, size.z));
+}
+
+float3 ComponentBoxCollider::GetSize() const
+{
+	return size;
+}
+
+void ComponentSphereCollider::SetRadius(float new_radius)
+{
+	delete shape;
+	radius = new_radius;
+	shape = new btSphereShape(radius);
+}
+
+float ComponentSphereCollider::GetRadius() const
+{
+	return radius;
+}
