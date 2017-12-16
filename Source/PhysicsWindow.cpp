@@ -109,8 +109,8 @@ void PhysicsWindow::DrawRigidbodyPanel(ComponentRigidBody* rigidbody) {
 	rigidbody->GetFreezePos(FreezePosX, FreezePosY, FreezePosZ);
 	rigidbody->GetFreezeRot(FreezeRotX, FreezeRotY, FreezeRotZ);
 	gravity = rigidbody->GetGravity();
-	kinematic = rigidbody->GetKinematic();
-	//don't know how to get the mass
+	kinematic = rigidbody->IsKinematic();
+	mass = rigidbody->GetMass();
 	drag = rigidbody->GetDrag();
 	angulardrag = rigidbody->GetADrag();
 

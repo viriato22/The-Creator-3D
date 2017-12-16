@@ -25,13 +25,15 @@ public:
 	void SetAsSensor(bool is_sensor);
 	void UseGravity(bool gravity);
 	void SetAsKinematic(bool kinematic);
+	void SetAsStatic(bool stat);
 	void SetMass(float mass);
 	void SetDrag(float drag, float adrag);
 	void FreezePos(bool X, bool Y, bool Z);
 	void FreezeRot(bool X, bool Y, bool Z);
 
 	bool GetGravity() const;
-	bool GetKinematic() const;
+	bool IsKinematic() const;
+	bool IsStatic() const;
 	float GetMass() const;
 	float GetDrag() const;
 	float GetADrag() const;
@@ -50,8 +52,8 @@ protected:
 	float mass = 0.0f;
 
 	bool is_sensor = false;
-	bool use_gravity = false;
 	bool is_kinematic = false;
+	bool is_static = false;
 
 	bool posX = false;
 	bool posY = false;

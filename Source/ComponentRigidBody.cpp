@@ -52,6 +52,8 @@ ComponentRigidBody::ComponentRigidBody(GameObject* attached_gameobject)
 	App->physics->GetWorld()->addRigidBody(rb);
 	App->physics->GetRigidBodies()->push_back(rb);
 
+	if (attached_gameobject->IsStatic())
+		SetAsStatic(true);
 }
 
 ComponentRigidBody::~ComponentRigidBody()
@@ -160,11 +162,11 @@ void ComponentRigidBody::GetPos(float* x, float* y, float* z)
 	*z = posFloat.m_floats[2];
 }
 
-void ComponentRigidBody::SetAsSensor(bool is_sensor)
+void ComponentRigidBody::SetAsSensor(bool sensor)
 {
-	if (is_sensor != is_sensor)
+	if (is_sensor != sensor)
 	{
-		is_sensor = is_sensor;
+		is_sensor = sensor;
 		if (is_sensor == true)
 			rb->setCollisionFlags(rb->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
 		else
@@ -174,12 +176,32 @@ void ComponentRigidBody::SetAsSensor(bool is_sensor)
 
 void ComponentRigidBody::UseGravity(bool gravity)
 {
-	use_gravity = gravity;
+	if(gravity) rb->setGravity(GRAVITY);
+	else		rb->setGravity(btVector3(0, 0, 0));
 }
 
 void ComponentRigidBody::SetAsKinematic(bool kinematic)
 {
-	is_kinematic = kinematic;
+	if (is_kinematic != kinematic)
+	{
+		is_kinematic = kinematic;
+		if (is_kinematic == true)
+			rb->setCollisionFlags(rb->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+		else
+			rb->setCollisionFlags(rb->getCollisionFlags() &~btCollisionObject::CF_KINEMATIC_OBJECT);
+	}
+}
+
+void ComponentRigidBody::SetAsStatic(bool stat)
+{
+	if (is_static != stat)
+	{
+		is_static = stat;
+		if (is_static == true)
+			rb->setCollisionFlags(rb->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
+		else
+			rb->setCollisionFlags(rb->getCollisionFlags() &~btCollisionObject::CF_STATIC_OBJECT);
+	}
 }
 
 void ComponentRigidBody::SetMass(float new_mass)
@@ -195,12 +217,18 @@ void ComponentRigidBody::SetDrag(float drag, float adrag)
 
 bool ComponentRigidBody::GetGravity() const
 {
-	return use_gravity;
+	if (rb->getGravity().isZero())	return false;
+	else							return true;
 }
 
-bool ComponentRigidBody::GetKinematic() const
+bool ComponentRigidBody::IsKinematic() const
 {
 	return is_kinematic;
+}
+
+bool ComponentRigidBody::IsStatic() const
+{
+	return is_static;
 }
 
 float ComponentRigidBody::GetMass() const
