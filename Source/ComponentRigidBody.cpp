@@ -134,13 +134,18 @@ void ComponentRigidBody::UpdateRBTransformFromGameObject()
 	btQuaternion quat; quat.setEuler(rotation.y, rotation.x, rotation.z);
 	t.setRotation(quat);
 
-	delete motion_state;
-	motion_state = new btDefaultMotionState(t);
-
-	rb->setMotionState(motion_state);
-	rb->getMotionState()->setWorldTransform(t);
+	ResetMotionState(&t);
 }
 
+void ComponentRigidBody::ResetMotionState(btTransform* motion_transform)
+{
+	delete motion_state;
+	motion_state = new btDefaultMotionState(*motion_transform);
+
+	rb->setMotionState(motion_state);
+	rb->activate(true);
+
+}
 
 void ComponentRigidBody::SetPos(float x, float y, float z)
 {
@@ -178,6 +183,10 @@ void ComponentRigidBody::UseGravity(bool gravity)
 {
 	if(gravity) rb->setGravity(GRAVITY);
 	else		rb->setGravity(btVector3(0, 0, 0));
+
+	btTransform t;
+	rb->getMotionState()->getWorldTransform(t);
+	ResetMotionState(&t);
 }
 
 void ComponentRigidBody::SetAsKinematic(bool kinematic)
@@ -189,6 +198,10 @@ void ComponentRigidBody::SetAsKinematic(bool kinematic)
 			rb->setCollisionFlags(rb->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
 		else
 			rb->setCollisionFlags(rb->getCollisionFlags() &~btCollisionObject::CF_KINEMATIC_OBJECT);
+
+		btTransform t;
+		rb->getMotionState()->getWorldTransform(t);
+		ResetMotionState(&t);
 	}
 }
 
@@ -201,6 +214,10 @@ void ComponentRigidBody::SetAsStatic(bool stat)
 			rb->setCollisionFlags(rb->getCollisionFlags() | btCollisionObject::CF_STATIC_OBJECT);
 		else
 			rb->setCollisionFlags(rb->getCollisionFlags() &~btCollisionObject::CF_STATIC_OBJECT);
+
+		btTransform t;
+		rb->getMotionState()->getWorldTransform(t);
+		ResetMotionState(&t);
 	}
 }
 
@@ -208,11 +225,19 @@ void ComponentRigidBody::SetMass(float new_mass)
 {
 	mass = new_mass;
 	rb->setMassProps(mass, rb->getLocalInertia()); 
+
+	btTransform t;
+	rb->getMotionState()->getWorldTransform(t);
+	ResetMotionState(&t);
 }
 
 void ComponentRigidBody::SetDrag(float drag, float adrag)
 {
 	rb->setDamping(drag, adrag);
+
+	btTransform t;
+	rb->getMotionState()->getWorldTransform(t);
+	ResetMotionState(&t);
 }
 
 bool ComponentRigidBody::GetGravity() const

@@ -4,6 +4,7 @@
 class btRigidBody;
 class btMotionState;
 class ComponentCollider;
+class btTransform;
 
 class ComponentRigidBody : public Component
 {
@@ -42,6 +43,7 @@ public:
 	
 	void UpdateGameObjTransform();
 	void UpdateRBTransformFromGameObject();
+	void ResetMotionState(btTransform* motion_transform);
 
 	btRigidBody* getBtRigidBody() { return rb; }
 
