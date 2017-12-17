@@ -34,7 +34,7 @@ The original creators of this engine were Sergi Pérez: https://github.com/sergi
 
  * ModulePhysics: This module was created to allow the interaction between our application and the [Bullet](https://pybullet.org/wordpress/) library.
  * ComponentRigidBody: This component is used to create rigidbodies to use in our engine. This means that objects assigned this component will start behaving accorging to the laws of physics. 
- * ComponentCollider:  
+ * ComponentCollider: This component is used to create volumes that will be used in the phsysics module by some objects and as a trigger by others
  
 ## License
 
