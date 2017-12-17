@@ -36,6 +36,11 @@ The original creators of this engine were Sergi Pérez: https://github.com/sergi
  * ComponentRigidBody: This component is used to create rigidbodies to use in our engine. This means that objects assigned this component will start behaving accorging to the laws of physics. 
  * ComponentCollider: This component is used to create volumes that will be used in the phsysics module by some objects and as a trigger by others
  
+## Info
+
+* To see the updates on [The Creator](https://github.com/viriato22/The-Creator-3D)
+* To download the latest [release](https://github.com/viriato22/The-Creator-3D/releases/tag/0.5)
+
 ## License
 
 This is free and unencumbered software released into the public domain.
