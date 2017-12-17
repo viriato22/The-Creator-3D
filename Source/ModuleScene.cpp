@@ -5,6 +5,7 @@
 #include "ModuleRenderer3D.h"
 #include "ComponentMeshRenderer.h"
 #include "ComponentTransform.h"
+#include "ComponentCollider.h"
 #include "ComponentCamera.h"
 #include "GameObject.h"
 #include "Component.h"

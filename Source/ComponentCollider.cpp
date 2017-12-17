@@ -1,6 +1,7 @@
 #include "ComponentCollider.h"
 #include "ComponentMeshRenderer.h"
 #include "Application.h"
+#include "ComponentTransform.h"
 #include "GameObject.h"
 #include "Mesh.h"
 
@@ -42,7 +43,8 @@ ComponentBoxCollider::ComponentBoxCollider(GameObject* attached_gameobject) : Co
 	}
 	else shape = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
 
-	float3 center_point = enclosingAABB->CenterPoint();
+	ComponentTransform* obj_transform = (ComponentTransform*)attached_gameobject->GetComponent(Component::Transform);
+	float3 center_point = enclosingAABB->CenterPoint() - obj_transform->GetGlobalPosition();
 	center = new btVector3( center_point.x, center_point.y, center_point.z );
 
 	RELEASE(enclosingAABB);

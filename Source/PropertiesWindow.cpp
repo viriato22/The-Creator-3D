@@ -132,6 +132,33 @@ void PropertiesWindow::DrawWindow()
 						CONSOLE_WARNING("GameObject can't have more than 1 RigidBody component!");
 					}
 				}
+				if (ImGui::MenuItem("BoxCollider")) {
+					if (selected_gameobject->GetColliders().size() == 0) {
+						selected_gameobject->AddComponent(Component::BoxCollider);
+					}
+					else
+					{
+						CONSOLE_WARNING("GameObject can't have more than 1 Collider !");
+					}
+				}
+				if (ImGui::MenuItem("SphereCollider")) {
+					if (selected_gameobject->GetColliders().size() == 0) {
+						selected_gameobject->AddComponent(Component::SphereCollider);
+					}
+					else
+					{
+						CONSOLE_WARNING("GameObject can't have more than 1 Collider !");
+					}
+				}
+				if (ImGui::MenuItem("MeshCollider")) {
+					if (selected_gameobject->GetColliders().size() == 0) {
+						selected_gameobject->AddComponent(Component::MeshCollider);
+					}
+					else
+					{
+						CONSOLE_WARNING("GameObject can't have more than 1 Collider !");
+					}
+				}
 				ImGui::EndPopup();
 			}
 		}

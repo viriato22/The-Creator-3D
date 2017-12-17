@@ -31,13 +31,15 @@ ComponentRigidBody::ComponentRigidBody(GameObject* attached_gameobject)
 
 	ComponentTransform* obj_transform = (ComponentTransform*)attached_gameobject->GetComponent(ComponentType::Transform);
 	btTransform startTransform;
-
-	float3 position = obj_transform->GetGlobalPosition();
-	startTransform.setOrigin({ position.x, position.y, position.z });
+	startTransform.setIdentity();
+/*
+	float3 obj_pos = obj_transform->GetGlobalPosition();
+	btVector3* collider_center = attached_collider->GetCenter();
+	startTransform.setOrigin({ collider_center->x() + obj_pos.x, collider_center->y() + obj_pos.y, collider_center->z() + obj_pos.z });
 
 	float3 rotation = obj_transform->GetGlobalRotation();
 	btQuaternion quat; quat.setEuler(rotation.y, rotation.x, rotation.z);
-	startTransform.setRotation(quat);
+	startTransform.setRotation(quat);*/
 
 	btVector3 localInertia(0, 0, 0);
 	mass = INITIAL_RB_MASS;
@@ -58,7 +60,8 @@ ComponentRigidBody::ComponentRigidBody(GameObject* attached_gameobject)
 
 ComponentRigidBody::~ComponentRigidBody()
 {
-	App->physics->GetWorld()->removeRigidBody(rb);
+	if(App->physics->GetWorld()) App->physics->GetWorld()->removeRigidBody(rb);
+	RELEASE(motion_state);
 	RELEASE(rb);
 }
 

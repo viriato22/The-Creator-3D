@@ -6,6 +6,7 @@
 #include "ComponentTransform.h"
 #include "Primitive.h"
 #include "ModuleEditor.h"
+#include "ModuleScene.h"
 #include "ComponentCollider.h"
 #include "ComponentRigidBody.h"
 #include "PerformanceWindow.h"
@@ -74,6 +75,11 @@ bool ModulePhysics3D::Start()
 		world->addRigidBody(body);
 	}
 
+
+	App->scene->main_camera->AddComponent(Component::SphereCollider);
+	ComponentRigidBody* camera_rb = (ComponentRigidBody*)App->scene->main_camera->AddComponent(Component::RigidBody);
+	camera_rb->SetAsKinematic(true);
+	
 	return true;
 }
 
@@ -85,7 +91,7 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 
 	for (std::list<btRigidBody*>::iterator it = rigid_bodies.begin(); it != rigid_bodies.end(); it++)
 	{
-		if (!(*it)->isStaticOrKinematicObject())
+		if (!(*it)->isStaticObject())
 		{
 			ComponentRigidBody* rb = (ComponentRigidBody*)(*it)->getUserPointer();
 			rb->UpdateGameObjTransform();
@@ -99,7 +105,7 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 		btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
 		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
 		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
-
+/*
 		int numContacts = contactManifold->getNumContacts();
 		if(numContacts > 0)
 		{
@@ -122,7 +128,7 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 					++item;
 				}
 			}
-		}
+		}*/
 	}
 	App->editor->performance_window->AddModuleData(this->name, ms_timer.ReadMs());
 	return UPDATE_CONTINUE;
@@ -151,7 +157,7 @@ update_status ModulePhysics3D::PostUpdate(float dt)
 // Called before quitting
 bool ModulePhysics3D::CleanUp()
 {
-	CONSOLE_DEBUG("Destroying 3D Physics simulation");
+	//CONSOLE_DEBUG("Destroying 3D Physics simulation");
 
 	// Remove from the world all collision bodies
 	for(int i = world->getNumCollisionObjects() - 1; i >= 0; i--)

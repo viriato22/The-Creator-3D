@@ -7,6 +7,7 @@
 #include "Data.h"
 #include "ComponentCamera.h"
 #include "ModuleInput.h"
+#include "ComponentRigidBody.h"
 #include "ModuleRenderer3D.h"
 #include "ComponentMeshRenderer.h"
 #include "GameObject.h"
@@ -141,6 +142,7 @@ update_status ModuleCamera3D::Update(float dt)
 	}
 
 	App->editor->performance_window->AddModuleData(this->name, ms_timer.ReadMs());
+	
 	
 	return UPDATE_CONTINUE;
 }
