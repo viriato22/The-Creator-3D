@@ -66,7 +66,7 @@ bool ModulePhysics3D::Start()
 
 	// Big plane as ground
 	{
-		btCollisionShape* colShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);
+		btCollisionShape* colShape = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
 
 		btDefaultMotionState* myMotionState = new btDefaultMotionState();
 		btRigidBody::btRigidBodyConstructionInfo rbInfo(0.0f, myMotionState, colShape);
@@ -76,9 +76,9 @@ bool ModulePhysics3D::Start()
 	}
 
 
-	App->scene->main_camera->AddComponent(Component::SphereCollider);
-	ComponentRigidBody* camera_rb = (ComponentRigidBody*)App->scene->main_camera->AddComponent(Component::RigidBody);
-	camera_rb->SetAsKinematic(true);
+	//App->scene->main_camera->AddComponent(Component::SphereCollider);
+	//ComponentRigidBody* camera_rb = (ComponentRigidBody*)App->scene->main_camera->AddComponent(Component::RigidBody);
+	//camera_rb->SetAsKinematic(true);
 	
 	return true;
 }
@@ -87,50 +87,55 @@ bool ModulePhysics3D::Start()
 update_status ModulePhysics3D::PreUpdate(float dt)
 {
 	ms_timer.Start();
-	world->stepSimulation(dt, 15);
 
-	for (std::list<btRigidBody*>::iterator it = rigid_bodies.begin(); it != rigid_bodies.end(); it++)
+	if (App->IsPlaying())
 	{
-		if (!(*it)->isStaticObject())
-		{
-			ComponentRigidBody* rb = (ComponentRigidBody*)(*it)->getUserPointer();
-			ComponentCamera* camera = (ComponentCamera*)rb->GetGameObject()->GetComponent(Component::Camera);
-			if (camera) rb->UpdateCameraTransform();
-			else		rb->UpdateGameObjTransform();
-		}
-		
-	}
+		world->stepSimulation(dt, 15);
 
-	int numManifolds = world->getDispatcher()->getNumManifolds();
-	for(int i = 0; i<numManifolds; i++)
-	{
-		btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
-		btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
-		btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
-/*
-		int numContacts = contactManifold->getNumContacts();
-		if(numContacts > 0)
+		for (std::list<btRigidBody*>::iterator it = rigid_bodies.begin(); it != rigid_bodies.end(); it++)
 		{
-			PhysBody3D* pbodyA = (PhysBody3D*)obA->getUserPointer();
-			PhysBody3D* pbodyB = (PhysBody3D*)obB->getUserPointer();
-
-			if(pbodyA && pbodyB)
+			if (!(*it)->isStaticObject())
 			{
-				std::list<Module*>::iterator item = pbodyA->collision_listeners.begin();
-				while(item != pbodyA->collision_listeners.end())
-				{
-					(*item)->OnCollision(pbodyA, pbodyB);
-					++item;
-				}
-
-				item = pbodyB->collision_listeners.begin();
-				while(item != pbodyB->collision_listeners.end())
-				{
-					(*item)->OnCollision(pbodyB, pbodyA);
-					++item;
-				}
+				ComponentRigidBody* rb = (ComponentRigidBody*)(*it)->getUserPointer();
+				ComponentCamera* camera = (ComponentCamera*)rb->GetGameObject()->GetComponent(Component::Camera);
+				if (camera) rb->UpdateCameraTransform();
+				else		rb->UpdateGameObjTransform();
 			}
-		}*/
+
+		}
+
+
+		int numManifolds = world->getDispatcher()->getNumManifolds();
+		for (int i = 0; i < numManifolds; i++)
+		{
+			btPersistentManifold* contactManifold = world->getDispatcher()->getManifoldByIndexInternal(i);
+			btCollisionObject* obA = (btCollisionObject*)(contactManifold->getBody0());
+			btCollisionObject* obB = (btCollisionObject*)(contactManifold->getBody1());
+			/*
+					int numContacts = contactManifold->getNumContacts();
+					if(numContacts > 0)
+					{
+						PhysBody3D* pbodyA = (PhysBody3D*)obA->getUserPointer();
+						PhysBody3D* pbodyB = (PhysBody3D*)obB->getUserPointer();
+
+						if(pbodyA && pbodyB)
+						{
+							std::list<Module*>::iterator item = pbodyA->collision_listeners.begin();
+							while(item != pbodyA->collision_listeners.end())
+							{
+								(*item)->OnCollision(pbodyA, pbodyB);
+								++item;
+							}
+
+							item = pbodyB->collision_listeners.begin();
+							while(item != pbodyB->collision_listeners.end())
+							{
+								(*item)->OnCollision(pbodyB, pbodyA);
+								++item;
+							}
+						}
+					}*/
+		}
 	}
 	App->editor->performance_window->AddModuleData(this->name, ms_timer.ReadMs());
 	return UPDATE_CONTINUE;

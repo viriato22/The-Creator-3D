@@ -45,7 +45,7 @@ ComponentBoxCollider::ComponentBoxCollider(GameObject* attached_gameobject) : Co
 
 	ComponentTransform* obj_transform = (ComponentTransform*)attached_gameobject->GetComponent(Component::Transform);
 	float3 center_point = enclosingAABB->CenterPoint() - obj_transform->GetGlobalPosition();
-	center = new btVector3( center_point.x, center_point.y, center_point.z );
+	center = new btVector3( -center_point.x, -center_point.y, -center_point.z );
 
 	RELEASE(enclosingAABB);
 }

@@ -117,7 +117,8 @@ void ComponentRigidBody::UpdateGameObjTransform()
 	ComponentTransform* obj_transform = (ComponentTransform*)GetGameObject()->GetComponent(Component::ComponentType::Transform);
 
 	btVector3 pos = t.getOrigin();
-	obj_transform->SetPosition({pos.x(), pos.y(), pos.z()});
+	btVector3* col_center = attached_collider->GetCenter();
+	obj_transform->SetPosition({pos.x() - col_center->x(), pos.y() - col_center->y(), pos.z() - col_center->z()});
 
 	btQuaternion quat = t.getRotation();
 	obj_transform->SetRotation({ quat.getX(), quat.getY(), quat.getZ() });

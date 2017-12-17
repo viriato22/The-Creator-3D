@@ -85,9 +85,9 @@ update_status ModuleCamera3D::Update(float dt)
 		ComponentCamera* game_camera = (ComponentCamera*)App->scene->main_camera->GetComponent(Component::Camera);
 		ComponentTransform* camera_transform = (ComponentTransform*)App->scene->main_camera->GetComponent(Component::Transform);
 		float3 new_pos(0, 0, 0);
-		float speed = 50.0f * dt;
+		float speed = 100.0f * dt;
 		if (App->input->GetKey(key_speed) == KEY_REPEAT)
-			speed = 100.0f * dt;
+			speed = 200.0f * dt;
 
 		if (App->input->GetKey(key_up) == KEY_REPEAT) new_pos.y += speed;
 		if (App->input->GetKey(key_down) == KEY_REPEAT) new_pos.y -= speed;
@@ -115,13 +115,14 @@ update_status ModuleCamera3D::Update(float dt)
 			if (dx != 0)
 			{
 				float3 current_rotation = camera_transform->GetGlobalRotation();
-				camera_transform->SetRotation({ current_rotation.x, current_rotation.y + dx, current_rotation.z });
+				
+				camera_transform->SetRotation({ current_rotation.x, current_rotation.y + dx, 0 });
 			}
 
 			if (dy != 0)
 			{
 				float3 current_rotation = camera_transform->GetGlobalRotation();
-				camera_transform->SetRotation({ current_rotation.x - dy, current_rotation.y, current_rotation.z });
+				camera_transform->SetRotation({ current_rotation.x - dy, current_rotation.y, 0 });
 			}
 		}
 

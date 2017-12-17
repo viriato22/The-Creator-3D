@@ -59,7 +59,7 @@ bool ModuleScene::Start()
 	main_camera = new GameObject();
 	main_camera->SetName("Main Camera");
 	ComponentTransform* transform = (ComponentTransform*)main_camera->GetComponent(Component::Transform);
-	transform->SetPosition({ 0,1,-10 });
+	transform->SetPosition({ 0,0,0 });
 	ComponentCamera* camera = (ComponentCamera*)main_camera->AddComponent(Component::Camera);
 	main_camera->SetTag("Main Camera");
 	scene_gameobjects.push_back(main_camera);
