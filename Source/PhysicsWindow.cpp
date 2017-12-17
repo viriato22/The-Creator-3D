@@ -173,29 +173,51 @@ void PhysicsWindow::DrawBoxColliderPanel(ComponentBoxCollider* boxcollider)
 	bool trigger;
 	float3 center, size;
 
+	trigger = boxcollider->GetTrigger();
+	//center = (float3)boxcollider->GetCenter();
+	size = boxcollider->GetSize();
+
 	if (ImGui::CollapsingHeader("Box Collider")) {
-		ImGui::Checkbox("Is Trigger", &trigger);
+		if (ImGui::Checkbox("Is Trigger", &trigger))
+		{
+			boxcollider->SetTrigger(trigger);
+		}
 
 		ImGui::Spacing();
 
-		ImGui::DragFloat3("Center", (float*)&center, 0.25f);
-		ImGui::DragFloat3("Size", (float*)&size, 0.25f);
+		if (ImGui::DragFloat3("Center", (float*)&center, 0.25f))
+		{
+
+		}
+		if (ImGui::DragFloat3("Size", (float*)&size, 0.25f))
+		{
+			boxcollider->SetSize(size);
+		}
 	}
 }
 
 void PhysicsWindow::DrawSphereColliderPanel(ComponentSphereCollider* spherecollider)
 {
-	bool trigger;
+	bool trigger = spherecollider->GetTrigger();
 	float3 center;
-	float radius;
+	float radius = spherecollider->GetRadius();
 
 	if (ImGui::CollapsingHeader("Sphere Collider")) {
-		ImGui::Checkbox("Is Trigger", &trigger);
+		if (ImGui::Checkbox("Is Trigger", &trigger))
+		{
+			spherecollider->SetTrigger(trigger);
+		}
 
 		ImGui::Spacing();
 
-		ImGui::DragFloat3("Center", (float*)&center, 0.25f);
-		ImGui::DragFloat("Radius", &radius, 0.25f);
+		if (ImGui::DragFloat3("Center", (float*)&center, 0.25f))
+		{
+
+		}
+		if (ImGui::DragFloat("Radius", &radius, 0.25f))
+		{
+			spherecollider->SetRadius(radius);
+		}
 	}
 }
 
@@ -216,7 +238,7 @@ void PhysicsWindow::DrawCapsuleColliderPanel()
 	}
 }
 
-void PhysicsWindow::DrawWheelColliderPanel()
+void PhysicsWindow::DrawWheelColliderPanel(ComponentChassisCollider* vehiclecollider)
 {
 	float mass, radius, wheeldamp, susprate, forceapp;
 	float3 center;
@@ -254,6 +276,11 @@ void PhysicsWindow::DrawWheelColliderPanel()
 			ImGui::DragFloat("Asymptote Value", &sfasval, 0.05f);
 			ImGui::DragFloat("Stiffness", &sfstiffness, 0.1f);
 		}
+	}
+
+	if (ImGui::Button("Add wheel"))
+	{
+		//Should create a wheel with a rigidbody and a btwheelinfo attached to the chassis
 	}
 }
 
