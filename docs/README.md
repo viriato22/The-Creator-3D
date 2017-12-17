@@ -30,6 +30,12 @@ The original creators of this engine were Sergi Pérez: https://github.com/sergi
  * ModuleTime: Allows us to do certain actions acording to the time since opening the application
  * ModuleWindow: This is used to create a window where we will execute or application
  
+## Last assignment sub-system
+
+ * ModulePhysics: This module was created to allow the interaction between our application and the [Bullet](https://pybullet.org/wordpress/) library.
+ * ComponentRigidBody: This component is used to create rigidbodies to use in our engine. This means that objects assigned this component will start behaving accorging to the laws of physics. 
+ * ComponentCollider:  
+ 
 ## License
 
 This is free and unencumbered software released into the public domain.
@@ -56,11 +62,3 @@ ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org/>
-
-## Credits
-
-The engine has been developed by:
-
-Adrià Martín: https://github.com/TinoTano
-
-Sergi Pérez: https://github.com/sergipa
