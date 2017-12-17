@@ -10,7 +10,7 @@ that will be implemented for Project 3.
 
 The Team consists of Rodrigo de Pedro: https://github.com/rodrigodpl and Daniel Garcia: https://github.com/viriato22
 
-
+![Team](https://lh3.googleusercontent.com/GPbknJSuKsKD6CADqwi0ot7HHPjJTYEDeaXtC60MMp64_ZDFds1pmzKgmAUNxLV2-q7gf5qk1Yd3FfYFN_uhFq315Wg8tK141aqRh923aAAMrVvBpR6IrL0Fxb8ZJkTshDsoW4ahprdxlNhJnIzw64fo4cq5sVVeppC-iBzzodsYBXpAlFNFBMTO3JWfx0P_XjUOnm98e12-wMRVy6TGXUNuK7IYsbWGtubBTPATC--Ul9chxEobAi85L6UeID_qs2AZMWQh2nUH5cdwdWiTNkIIWtU1CfpI6oFYkQhLjVOzWPE4h9a_1f-nYXgHIxK0XEyKxy32ApO2zqb2WPXrWU796Vk-VtwUd0VfCzGsBu3CDfeoPMc9CyDKwhAFwjPJOUHZldlWHxt5TRbzlpMINqSlhUi9Vqb45TBpkb6ui1W4Mlhr_vVQETW601pNCM-Dxlxwn8D3pF98UW2869ux36j7AmnQDy8--BWKqtGkmaVkm-N5HXvBgd81hoC40JSQWgytN5hsEw4DsSaYW9kbPBWN92R0Q_WKRWS3gCA0v_hvr7KWJh92CqY0lOPZT1ClOF13OgA0Su69EcGE550rwxoYsNa67CDIuJ5b59h8lA=w780-h655-no)
 
 The original creators of this engine were Sergi Pérez: https://github.com/sergipa and Adrià Martín: https://github.com/TinoTano
 
