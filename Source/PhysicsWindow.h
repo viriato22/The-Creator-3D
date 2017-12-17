@@ -24,9 +24,9 @@ public:
 	void DrawCapsuleColliderPanel();
 	void DrawWheelColliderPanel();
 
-	/*void DrawHingeConstraintPanel();
+	//void DrawHingeConstraintPanel();
 	void DrawFixedConstraintPanel();
-	void DrawSpringConstraintPanel();*/
+	//void DrawSpringConstraintPanel();
 
 private:
 	//void SelectObjects(GameObject* object1, GameObject* object2); //For some reason it doesn't work
