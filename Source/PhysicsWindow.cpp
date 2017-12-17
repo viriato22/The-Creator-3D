@@ -72,14 +72,15 @@ void PhysicsWindow::DrawWindow()
 				object1 = (GameObject*)(*ptr);
 				ptr++;
 				object2 = (GameObject*)(*ptr);
+				
 			}
-			if (ImGui::Button("Make a hinge")) {
+			/*if (ImGui::Button("Make a hinge")) {
 				std::list<GameObject*>::iterator ptr;
 				ptr = App->scene->selected_gameobjects.begin();
 				object1 = (GameObject*)(*ptr);
 				ptr++;
 				object2 = (GameObject*)(*ptr);
-			}
+			}*/
 		}
 		else {
 
@@ -173,13 +174,26 @@ void PhysicsWindow::DrawBoxColliderPanel(ComponentBoxCollider* boxcollider)
 	bool trigger;
 	float3 center, size;
 
+	trigger = boxcollider->GetTrigger();
+	//center = (float3)boxcollider->GetCenter();
+	size = boxcollider->GetSize();
+
 	if (ImGui::CollapsingHeader("Box Collider")) {
-		ImGui::Checkbox("Is Trigger", &trigger);
+		if (ImGui::Checkbox("Is Trigger", &trigger))
+		{
+			boxcollider->SetTrigger(trigger);
+		}
 
 		ImGui::Spacing();
 
-		ImGui::DragFloat3("Center", (float*)&center, 0.25f);
-		ImGui::DragFloat3("Size", (float*)&size, 0.25f);
+		if (ImGui::DragFloat3("Center", (float*)&center, 0.25f))
+		{
+
+		}
+		if (ImGui::DragFloat3("Size", (float*)&size, 0.25f))
+		{
+			boxcollider->SetSize(size);
+		}
 	}
 }
 
@@ -264,16 +278,23 @@ void PhysicsWindow::DrawWheelColliderPanel()
 //	}
 //}
 //
-//void PhysicsWindow::DrawFixedConstraintPanel()
-//{
-//	if (ImGui::CollapsingHeader("Fixed Constraint")) {
-//
-//	}
-//}
+void PhysicsWindow::DrawFixedConstraintPanel()
+{
+	if (ImGui::CollapsingHeader("Fixed Constraint")) {
+
+	}
+}
 //
 //void PhysicsWindow::DrawSpringConstraintPanel()
 //{
 //	if (ImGui::CollapsingHeader("Spring Constraint")) {
 //
 //	}
+//}
+
+//void CreateConstrint() {
+//	btPoint2PointConstraint(btRigidBody& rbA,
+//		btRigidBody& rbB,
+//		const btVector3& pivotInA,
+//		const btVector3& pivotInB);
 //}
