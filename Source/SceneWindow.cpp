@@ -8,6 +8,7 @@
 #include "ModuleTime.h"
 #include "GameObject.h"
 #include "ComponentTransform.h"
+#include "ComponentRigidBody.h"
 #include "RenderTextureMSAA.h"
 #include "ModuleInput.h"
 
@@ -121,6 +122,10 @@ void SceneWindow::DrawWindow()
 							f3_translate = App->scene->selected_gameobjects.front()->GetParent()->GetGlobalTransfomMatrix().Inverted().TransformPos(f3_translate);
 						}
 						transform->SetPosition(go_position + f3_translate);
+
+						if (ComponentRigidBody* rb = (ComponentRigidBody*)transform->GetGameObject()->GetComponent(Component::ComponentType::RigidBody))
+							rb->UpdateRBTransformFromGameObject();
+
 						break;
 					case ImGuizmo::OPERATION::ROTATE:
 						if (App->scene->selected_gameobjects.front()->GetParent() != nullptr)
@@ -128,6 +133,9 @@ void SceneWindow::DrawWindow()
 							f3_rotation = App->scene->selected_gameobjects.front()->GetParent()->GetGlobalTransfomMatrix().Inverted().TransformPos(f3_rotation);
 						}
 						transform->SetRotation(go_rotation + f3_rotation);
+
+						if (ComponentRigidBody* rb = (ComponentRigidBody*)transform->GetGameObject()->GetComponent(Component::ComponentType::RigidBody))
+							rb->UpdateRBTransformFromGameObject();
 						break;
 					case ImGuizmo::OPERATION::SCALE:
 						if (last_used_scale.x != f3_scale.x || last_used_scale.y != f3_scale.y || last_used_scale.z != f3_scale.z)
@@ -136,6 +144,9 @@ void SceneWindow::DrawWindow()
 							f3_scale -= last_used_scale;
 							last_used_scale = tmp;
 							transform->SetScale(go_scale + f3_scale);
+
+							if (ComponentRigidBody* rb = (ComponentRigidBody*)transform->GetGameObject()->GetComponent(Component::ComponentType::RigidBody))
+								rb->UpdateRBTransformFromGameObject();
 						}
 						break;
 				}
