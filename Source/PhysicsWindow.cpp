@@ -238,7 +238,7 @@ void PhysicsWindow::DrawCapsuleColliderPanel()
 	}
 }
 
-void PhysicsWindow::DrawWheelColliderPanel()
+void PhysicsWindow::DrawWheelColliderPanel(ComponentChassisCollider* vehiclecollider)
 {
 	float mass, radius, wheeldamp, susprate, forceapp;
 	float3 center;
@@ -276,6 +276,11 @@ void PhysicsWindow::DrawWheelColliderPanel()
 			ImGui::DragFloat("Asymptote Value", &sfasval, 0.05f);
 			ImGui::DragFloat("Stiffness", &sfstiffness, 0.1f);
 		}
+	}
+
+	if (ImGui::Button("Add wheel"))
+	{
+		//Should create a wheel with a rigidbody and a btwheelinfo attached to the chassis
 	}
 }
 

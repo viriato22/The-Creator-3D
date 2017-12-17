@@ -7,6 +7,7 @@
 #include "Bullet\include\btBulletCollisionCommon.h"
 
 #include "MathGeoLib\MathGeoLib.h"
+#include "Bullet\include\BulletDynamics\Vehicle\btRaycastVehicle.h"
 
 ComponentCollider::ComponentCollider(GameObject* attached_gameobject)
 {
@@ -167,4 +168,54 @@ void ComponentSphereCollider::SetRadius(float new_radius)
 float ComponentSphereCollider::GetRadius() const
 {
 	return radius;
+}
+
+ComponentChassisCollider::ComponentChassisCollider(GameObject* attached_gameobject) : ComponentCollider(attached_gameobject)
+{
+	SetName("WheelCollider");
+	SetType(ComponentType::ChassisCollider);
+
+	std::list<Component*> components = attached_gameobject->GetComponents(ComponentType::MeshRenderer);
+	AABB* enclosingAABB = new AABB({ 0,0,0 }, { 0,0,0 });
+	
+	vehicle_raycaster = new btDefaultVehicleRaycaster(App->physics->GetWorld()); //Rodrigo --> for some reason it doesn't let me call App
+
+	if (!components.empty())
+	{
+		for (std::list<Component*>::iterator it = components.begin(); it != components.end(); it++)
+		{
+			ComponentMeshRenderer* mesh_renderer = (ComponentMeshRenderer*)(*it);
+			enclosingAABB->Enclose(mesh_renderer->GetMesh()->box);
+		}
+
+		float3 AABB_size = enclosingAABB->Size();
+		if(attached_gameobject->GetComponent(ComponentType::RigidBody)) shape = new btRaycastVehicle(tuning, attached_gameobject->GetComponent(ComponentType::RigidBody), vehicle_raycaster); //needs a rigidbody to work
+		//needs to create an else that creates a rigidbody and creates the vehicle
+	}
+	else {
+		//create a default shape
+	}
+
+	float3 center_point = enclosingAABB->CenterPoint();
+	center = new btVector3(center_point.x, center_point.y, center_point.z);
+
+	RELEASE(enclosingAABB);
+}
+
+void ComponentChassisCollider::GetValues(float& new_mass, float& new_radius, float& new_wheeldamp, float& new_suspensionrate)
+{
+	new_mass = mass;
+	new_radius = radius;
+	new_wheeldamp = wheeldamp;
+	new_suspensionrate = suspension_rate;
+}
+
+void ComponentChassisCollider::SetValues(float new_mass, float new_radius, float new_wheeldamp, float new_suspensionrate, float new_spring, float new_damper)
+{
+	mass = new_mass;
+	radius = new_radius;
+	wheeldamp = new_wheeldamp;
+	suspension_rate = new_suspensionrate;
+	spring = new_spring;
+	damper = new_damper;
 }
