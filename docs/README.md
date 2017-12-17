@@ -16,8 +16,20 @@ The original creators of this engine were Sergi Pérez: https://github.com/sergi
 
 ## Main core sub-system
 
-
-
+ * Component: The component module handles the interaction between the modules and the UI
+ * ModuleAudio: This module allows the use of audio inside the engine
+ * ModuleCamera3D: This module is used to create and modify cameras.
+ * ModuleEditor: This handles the UI and allows access to the different components
+ * ModuleFileSystem: This allows the interaction between our engine and the system to create, read and modify files
+ * ModuleInput: Allows us to use the keyboard and mouse to create certain functions needed for the engine such as using the arrow keys to move the camera
+ * ModuleMaterialImporter: This module is used to load materials to use in the 3d models
+ * ModulePrefabImporter: Allows to import models with their materials
+ * ModuleRenderer3D: Draws the 3D components on a window
+ * ModuleScene: Saves and loads the position of all the 3d objects with all of their components
+ * ModuleTextureImporter: This module is used to import certain image formats to use in the 3d models
+ * ModuleTime: Allows us to do certain actions acording to the time since opening the application
+ * ModuleWindow: This is used to create a window where we will execute or application
+ 
 ## License
 
 This is free and unencumbered software released into the public domain.
