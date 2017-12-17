@@ -11,6 +11,7 @@
 #include "ModuleRenderer3D.h"
 #include "ComponentMeshRenderer.h"
 #include "GameObject.h"
+#include "ComponentTransform.h"
 #include "ModuleWindow.h"
 #include "Mesh.h"
 #include <vector>
@@ -78,7 +79,58 @@ bool ModuleCamera3D::CleanUp()
 update_status ModuleCamera3D::Update(float dt)
 {
 	ms_timer.Start();
-	if (can_update)
+
+	if (App->IsPlaying())
+	{
+		ComponentCamera* game_camera = (ComponentCamera*)App->scene->main_camera->GetComponent(Component::Camera);
+		ComponentTransform* camera_transform = (ComponentTransform*)App->scene->main_camera->GetComponent(Component::Transform);
+		float3 new_pos(0, 0, 0);
+		float speed = 50.0f * dt;
+		if (App->input->GetKey(key_speed) == KEY_REPEAT)
+			speed = 100.0f * dt;
+
+		if (App->input->GetKey(key_up) == KEY_REPEAT) new_pos.y += speed;
+		if (App->input->GetKey(key_down) == KEY_REPEAT) new_pos.y -= speed;
+
+		if (App->input->GetKey(key_forward) == KEY_REPEAT) new_pos += game_camera->camera_frustum.front * speed;
+		if (App->input->GetKey(key_backward) == KEY_REPEAT) new_pos -= game_camera->camera_frustum.front * speed;
+		if (App->input->GetMouseZ() > 0) new_pos += game_camera->camera_frustum.front * speed;
+		if (App->input->GetMouseZ() < 0) new_pos -= game_camera->camera_frustum.front * speed;
+
+		if (App->input->GetKey(key_left) == KEY_REPEAT) new_pos -= game_camera->camera_frustum.WorldRight() * speed;
+		if (App->input->GetKey(key_right) == KEY_REPEAT) new_pos += game_camera->camera_frustum.WorldRight() * speed;
+
+		if (!new_pos.IsZero())
+		{
+			camera_transform->SetPosition(camera_transform->GetGlobalPosition() + new_pos);
+		}
+
+		math::Frustum* game_camera_frustum = &game_camera->camera_frustum;
+
+		if ((App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT && !camera_is_orbital) || App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && camera_is_orbital)
+		{
+			float dx = -(float)App->input->GetMouseXMotion() * camera_sensitivity * 5 * dt;
+			float dy = -(float)App->input->GetMouseYMotion() * camera_sensitivity * 5 *dt;
+
+			if (dx != 0)
+			{
+				float3 current_rotation = camera_transform->GetGlobalRotation();
+				camera_transform->SetRotation({ current_rotation.x, current_rotation.y + dx, current_rotation.z });
+			}
+
+			if (dy != 0)
+			{
+				float3 current_rotation = camera_transform->GetGlobalRotation();
+				camera_transform->SetRotation({ current_rotation.x - dy, current_rotation.y, current_rotation.z });
+			}
+		}
+
+		ComponentRigidBody* camera_rb = (ComponentRigidBody*)App->scene->main_camera->GetComponent(Component::RigidBody);
+		if (camera_rb)
+			camera_rb->UpdateRBTransformFromGameObject();
+
+	}
+	else if (can_update)
 	{
 		// Implement a debug camera with keys and mouse
 		// Now we can make this movememnt frame rate independant!

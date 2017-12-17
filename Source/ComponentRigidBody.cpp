@@ -32,14 +32,14 @@ ComponentRigidBody::ComponentRigidBody(GameObject* attached_gameobject)
 	ComponentTransform* obj_transform = (ComponentTransform*)attached_gameobject->GetComponent(ComponentType::Transform);
 	btTransform startTransform;
 	startTransform.setIdentity();
-/*
+
 	float3 obj_pos = obj_transform->GetGlobalPosition();
 	btVector3* collider_center = attached_collider->GetCenter();
 	startTransform.setOrigin({ collider_center->x() + obj_pos.x, collider_center->y() + obj_pos.y, collider_center->z() + obj_pos.z });
 
 	float3 rotation = obj_transform->GetGlobalRotation();
 	btQuaternion quat; quat.setEuler(rotation.y, rotation.x, rotation.z);
-	startTransform.setRotation(quat);*/
+	startTransform.setRotation(quat);
 
 	btVector3 localInertia(0, 0, 0);
 	mass = INITIAL_RB_MASS;
@@ -121,6 +121,18 @@ void ComponentRigidBody::UpdateGameObjTransform()
 
 	btQuaternion quat = t.getRotation();
 	obj_transform->SetRotation({ quat.getX(), quat.getY(), quat.getZ() });
+
+	obj_transform->UpdateGlobalMatrix();
+}
+
+void ComponentRigidBody::UpdateCameraTransform()
+{
+	btTransform t;
+	rb->getMotionState()->getWorldTransform(t);
+	ComponentTransform* obj_transform = (ComponentTransform*)GetGameObject()->GetComponent(Component::ComponentType::Transform);
+
+	btVector3 pos = t.getOrigin();
+	obj_transform->SetPosition({ pos.x(), pos.y(), pos.z() });
 
 	obj_transform->UpdateGlobalMatrix();
 }

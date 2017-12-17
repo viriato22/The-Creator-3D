@@ -94,7 +94,9 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 		if (!(*it)->isStaticObject())
 		{
 			ComponentRigidBody* rb = (ComponentRigidBody*)(*it)->getUserPointer();
-			rb->UpdateGameObjTransform();
+			ComponentCamera* camera = (ComponentCamera*)rb->GetGameObject()->GetComponent(Component::Camera);
+			if (camera) rb->UpdateCameraTransform();
+			else		rb->UpdateGameObjTransform();
 		}
 		
 	}

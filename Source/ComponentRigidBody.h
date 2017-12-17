@@ -42,6 +42,7 @@ public:
 	void GetFreezeRot(bool& X, bool& Y, bool& Z);
 	
 	void UpdateGameObjTransform();
+	void UpdateCameraTransform();
 	void UpdateRBTransformFromGameObject();
 	void ResetMotionState(btTransform* motion_transform);
 
