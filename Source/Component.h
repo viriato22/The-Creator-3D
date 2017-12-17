@@ -10,7 +10,7 @@ class Component
 public:
 	enum ComponentType {
 		Transform, Camera, RigidBody, MeshRenderer, BoxCollider, SphereCollider, AudioSource, Animaton,
-		Script, ParticleSystem, Physics, MeshCollider, ChassisCollider, Unknown
+		Script, ParticleSystem, Physics, MeshCollider, Unknown
 	};
 
 	Component();

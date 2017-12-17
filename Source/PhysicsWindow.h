@@ -6,7 +6,6 @@ class Component;
 class ComponentRigidBody;
 class ComponentBoxCollider;
 class ComponentSphereCollider;
-class ComponentChassisCollider;
 
 class PhysicsWindow :
 	public Window
@@ -23,7 +22,7 @@ public:
 	void DrawBoxColliderPanel(ComponentBoxCollider* boxcollider);
 	void DrawSphereColliderPanel(ComponentSphereCollider* spherecollider);
 	void DrawCapsuleColliderPanel();
-	void DrawWheelColliderPanel(ComponentChassisCollider* vehiclecollider);
+	void DrawWheelColliderPanel();
 
 	/*void DrawHingeConstraintPanel();
 	void DrawFixedConstraintPanel();

@@ -173,51 +173,29 @@ void PhysicsWindow::DrawBoxColliderPanel(ComponentBoxCollider* boxcollider)
 	bool trigger;
 	float3 center, size;
 
-	trigger = boxcollider->GetTrigger();
-	//center = (float3)boxcollider->GetCenter();
-	size = boxcollider->GetSize();
-
 	if (ImGui::CollapsingHeader("Box Collider")) {
-		if (ImGui::Checkbox("Is Trigger", &trigger))
-		{
-			boxcollider->SetTrigger(trigger);
-		}
+		ImGui::Checkbox("Is Trigger", &trigger);
 
 		ImGui::Spacing();
 
-		if (ImGui::DragFloat3("Center", (float*)&center, 0.25f))
-		{
-
-		}
-		if (ImGui::DragFloat3("Size", (float*)&size, 0.25f))
-		{
-			boxcollider->SetSize(size);
-		}
+		ImGui::DragFloat3("Center", (float*)&center, 0.25f);
+		ImGui::DragFloat3("Size", (float*)&size, 0.25f);
 	}
 }
 
 void PhysicsWindow::DrawSphereColliderPanel(ComponentSphereCollider* spherecollider)
 {
-	bool trigger = spherecollider->GetTrigger();
+	bool trigger;
 	float3 center;
-	float radius = spherecollider->GetRadius();
+	float radius;
 
 	if (ImGui::CollapsingHeader("Sphere Collider")) {
-		if (ImGui::Checkbox("Is Trigger", &trigger))
-		{
-			spherecollider->SetTrigger(trigger);
-		}
+		ImGui::Checkbox("Is Trigger", &trigger);
 
 		ImGui::Spacing();
 
-		if (ImGui::DragFloat3("Center", (float*)&center, 0.25f))
-		{
-
-		}
-		if (ImGui::DragFloat("Radius", &radius, 0.25f))
-		{
-			spherecollider->SetRadius(radius);
-		}
+		ImGui::DragFloat3("Center", (float*)&center, 0.25f);
+		ImGui::DragFloat("Radius", &radius, 0.25f);
 	}
 }
 
@@ -238,7 +216,7 @@ void PhysicsWindow::DrawCapsuleColliderPanel()
 	}
 }
 
-void PhysicsWindow::DrawWheelColliderPanel(ComponentChassisCollider* vehiclecollider)
+void PhysicsWindow::DrawWheelColliderPanel()
 {
 	float mass, radius, wheeldamp, susprate, forceapp;
 	float3 center;
@@ -276,11 +254,6 @@ void PhysicsWindow::DrawWheelColliderPanel(ComponentChassisCollider* vehiclecoll
 			ImGui::DragFloat("Asymptote Value", &sfasval, 0.05f);
 			ImGui::DragFloat("Stiffness", &sfstiffness, 0.1f);
 		}
-	}
-
-	if (ImGui::Button("Add wheel"))
-	{
-		//Should create a wheel with a rigidbody and a btwheelinfo attached to the chassis
 	}
 }
 
