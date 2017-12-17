@@ -8,7 +8,7 @@ The Creator 3D is a 3D engine made for educational purposes. This is an early ve
 
 ## Usage
 
-Download the latest release available, which may be found here: https://github.com/sergipa/The-Creator-3D/releases
+Download the latest release available, which may be found here: https://github.com/viriato22/The-Creator-3D/releases
 
 Execute the engine, there is no formal installation process.
 
@@ -52,3 +52,9 @@ The engine has been developed by:
 Adrià Martín: https://github.com/TinoTano
 
 Sergi Pérez: https://github.com/sergipa
+
+The physics module has been developed by:
+
+Rodrigo de Pedro: https://github.com/rodrigodpl
+
+Daniel Garcia: https://github.com/viriato22
